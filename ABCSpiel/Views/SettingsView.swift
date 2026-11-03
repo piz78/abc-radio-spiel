@@ -25,6 +25,11 @@ struct SettingsView: View {
                 Section {
                     Toggle("Moderator redt", isOn: $settings.voiceEnabled)
                     if settings.voiceEnabled {
+                        NavigationLink {
+                            VoiceStudioView()
+                        } label: {
+                            Label("Eigeni Stimm", systemImage: "waveform.badge.mic")
+                        }
                         Picker("Stimm", selection: $settings.voiceIdentifier) {
                             Text("Automatisch").tag(String?.none)
                             ForEach(voices, id: \.identifier) { voice in
@@ -44,7 +49,7 @@ struct SettingsView: View {
                         Button {
                             app.applySettings()
                             AudioSession.configure(listening: false)
-                            app.voice.speak("Grüezi mitenand! Ich bi de \(ModeratorScript.moderatorName), din Moderator bim ABC.")
+                            app.voice.speak(ModeratorScript.probe)
                         } label: {
                             Label("Probelose", systemImage: "speaker.wave.2.fill")
                         }

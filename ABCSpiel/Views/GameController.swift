@@ -65,13 +65,13 @@ final class GameController {
         let voice = app.voice
         let greeting = ModeratorScript.pick(ModeratorScript.greetings)
         bubble = greeting.display
-        await voice.say(greeting.spoken)
+        await voice.say(greeting)
         if Task.isCancelled { return }
 
         if app.settings.explainRules {
             let rules = ModeratorScript.rules(seconds: app.settings.roundSeconds, target: target)
             bubble = rules.display
-            await voice.say(rules.spoken)
+            await voice.say(rules)
             if Task.isCancelled { return }
         }
 
@@ -80,7 +80,7 @@ final class GameController {
         withAnimation(.spring(duration: 0.8)) { cardRevealed = true }
         SoundFX.reveal()
         bubble = announcement.display
-        await voice.say(announcement.spoken)
+        await voice.say(announcement)
         if Task.isCancelled { return }
         withAnimation { readyToStart = true }
     }
@@ -104,7 +104,7 @@ final class GameController {
             phase = .countdown(3 - index)
             bubble = line.display
             SoundFX.tick()
-            app.voice.speak(line.spoken)
+            app.voice.speak(line)
             try? await Task.sleep(for: .milliseconds(index == 2 ? 450 : 850))
         }
         if Task.isCancelled { return }
@@ -166,7 +166,7 @@ final class GameController {
             return
         }
         bubble = question.prompt
-        app.voice.speak(question.prompt)
+        app.voice.speak(ModeratorScript.questionLine(question))
         if isListening { listener.nextQuestion() }
     }
 
@@ -223,11 +223,11 @@ final class GameController {
         flowTask = Task {
             let end = outOfQuestions ? ModeratorScript.outOfQuestions : ModeratorScript.pick(ModeratorScript.timeUp)
             bubble = end.display
-            await app.voice.say(end.spoken)
+            await app.voice.say(end)
             if Task.isCancelled { return }
             let verdict = ModeratorScript.verdict(score: score, target: target)
             bubble = verdict.display
-            await app.voice.say(verdict.spoken)
+            await app.voice.say(verdict)
         }
     }
 

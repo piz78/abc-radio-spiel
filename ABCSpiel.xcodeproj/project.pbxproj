@@ -184,6 +184,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ABC;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.word-games";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "S'Mikrofon wird bruucht, damit d'App dini Antworte ghört.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "D'Spracherchennig prüeft, öb dini Antwort richtig isch.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -217,6 +219,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ABC;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.word-games";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "S'Mikrofon wird bruucht, damit d'App dini Antworte ghört.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "D'Spracherchennig prüeft, öb dini Antwort richtig isch.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

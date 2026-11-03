@@ -14,6 +14,7 @@ final class AppModel {
     let bank: QuestionBank
     let settings = AppSettings()
     let voice = ModeratorVoice()
+    let clips = ClipLibrary()
     private(set) var stats: GameStats
 
     private let statsKey = "gameStats"
@@ -31,6 +32,7 @@ final class AppModel {
         } else {
             stats = GameStats()
         }
+        voice.clips = clips
     }
 
     var generator: CardGenerator {
@@ -48,6 +50,7 @@ final class AppModel {
         voice.isEnabled = settings.voiceEnabled
         voice.voiceIdentifier = settings.voiceIdentifier
         voice.rate = Float(settings.speechRate)
+        clips.isEnabled = settings.useOwnVoice
         SoundFX.isEnabled = settings.soundEnabled
     }
 

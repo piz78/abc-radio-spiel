@@ -15,6 +15,7 @@ final class AppSettings {
     var soundEnabled: Bool { didSet { defaults.set(soundEnabled, forKey: Keys.soundEnabled) } }
     var includeHardLetters: Bool { didSet { defaults.set(includeHardLetters, forKey: Keys.includeHardLetters) } }
     var explainRules: Bool { didSet { defaults.set(explainRules, forKey: Keys.explainRules) } }
+    var useOwnVoice: Bool { didSet { defaults.set(useOwnVoice, forKey: Keys.useOwnVoice) } }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -27,6 +28,7 @@ final class AppSettings {
             Keys.soundEnabled: true,
             Keys.includeHardLetters: true,
             Keys.explainRules: true,
+            Keys.useOwnVoice: true,
         ])
         roundSeconds = defaults.integer(forKey: Keys.roundSeconds)
         targetScore = defaults.integer(forKey: Keys.targetScore)
@@ -37,6 +39,7 @@ final class AppSettings {
         soundEnabled = defaults.bool(forKey: Keys.soundEnabled)
         includeHardLetters = defaults.bool(forKey: Keys.includeHardLetters)
         explainRules = defaults.bool(forKey: Keys.explainRules)
+        useOwnVoice = defaults.bool(forKey: Keys.useOwnVoice)
     }
 
     private enum Keys {
@@ -49,5 +52,6 @@ final class AppSettings {
         static let soundEnabled = "soundEnabled"
         static let includeHardLetters = "includeHardLetters"
         static let explainRules = "explainRules"
+        static let useOwnVoice = "useOwnVoice"
     }
 }

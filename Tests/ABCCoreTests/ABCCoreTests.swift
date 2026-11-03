@@ -171,7 +171,7 @@ final class ModeratorAndStatsTests: XCTestCase {
             XCTAssertTrue(line.display.contains("\(score)"))
         }
         let win = ModeratorScript.verdict(score: 12, target: 12, using: &rng).display
-        XCTAssertTrue(win.contains("gwunne") || win.contains("Siig"))
+        XCTAssertTrue(win.lowercased().contains("gwunne") || win.contains("Siig"))
     }
 
     func testLetterAnnouncementUsesSpokenName() {
@@ -193,5 +193,55 @@ final class ModeratorAndStatsTests: XCTestCase {
         XCTAssertEqual(stats.bestByLetter["A"], 13)
         XCTAssertEqual(stats.recentLetters, ["A", "B"])
         XCTAssertEqual(stats.averageScore, 29.0 / 3.0, accuracy: 0.001)
+    }
+}
+
+final class ClipCatalogTests: XCTestCase {
+    func testKeysAreUniqueAndFileSafe() throws {
+        let clips = ClipCatalog.all(bank: try QuestionBankTests.loadBank())
+        let keys = clips.map(\.key)
+        XCTAssertEqual(Set(keys).count, keys.count, "Doppelte Clip-Schlüssel")
+        let allowed = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789-")
+        for key in keys {
+            XCTAssertFalse(key.isEmpty)
+            XCTAssertTrue(key.unicodeScalars.allSatisfy(allowed.contains), "Ungültiger Schlüssel: \(key)")
+        }
+        XCTAssertTrue(keys.contains("q-b-bern"))
+        XCTAssertTrue(keys.contains("q-u-u-boot"))
+    }
+
+    func testEveryPlayedClipIsInCatalog() throws {
+        let bank = try QuestionBankTests.loadBank()
+        let keys = Set(ClipCatalog.all(bank: bank).map(\.key))
+        var lines: [ModeratorLine] = ModeratorScript.greetings + ModeratorScript.countdown + ModeratorScript.timeUp
+        lines += [ModeratorScript.outOfQuestions, ModeratorScript.probe]
+        for seconds in GameOptions.roundSecondsChoices {
+            for target in GameOptions.targetRange {
+                lines.append(ModeratorScript.rules(seconds: seconds, target: target))
+            }
+        }
+        var rng = SeededGenerator(seed: 11)
+        for letter in bank.letters {
+            for _ in 0..<5 { lines.append(ModeratorScript.letterAnnouncement(letter, using: &rng)) }
+        }
+        for target in GameOptions.targetRange {
+            for score in 0...25 {
+                for _ in 0..<3 { lines.append(ModeratorScript.verdict(score: score, target: target, using: &rng)) }
+            }
+        }
+        lines += bank.questions.map(ModeratorScript.questionLine)
+        for line in lines {
+            for clip in line.clips {
+                XCTAssertTrue(keys.contains(clip.key), "Clip fehlt im Katalog: \(clip.key)")
+            }
+        }
+    }
+
+    func testManifestJSON() throws {
+        let data = try ClipCatalog.manifestJSON(questionsText: "B | Hauptstadt? | Bern\n")
+        let decoded = try JSONDecoder().decode([Clip].self, from: data)
+        XCTAssertTrue(decoded.contains { $0.key == "q-b-bern" && $0.text == "Hauptstadt?" })
+        XCTAssertTrue(decoded.contains { $0.key == "letter-b" })
+        XCTAssertTrue(decoded.contains { $0.key.hasPrefix("ref-") })
     }
 }

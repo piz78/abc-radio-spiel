@@ -1,0 +1,11 @@
+# Aussprache-Hilfen für den Stimm-Klon.
+# Die Modelle haben vor allem Hochdeutsch gelernt. Hier kannst du Wörter so umschreiben,
+# wie sie gesprochen werden sollen. Format:  Wort = So sprechen
+# Gilt nur fürs Erzeugen der Audio-Clips, nicht für den Text in der App.
+
+s'ABC = s A Be Ze
+ABC-Legände = A Be Ze Legände
+ABC = A Be Ze
+# Beispiele – bei Bedarf aktivieren (das # entfernen) und mit --keys … --neu testen:
+# Chäs = Chääs
+# Buechstabe = Bu-ech-stabe

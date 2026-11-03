@@ -20,6 +20,24 @@ jobs:
       - name: Core-Logik testen (swift test)
         run: swift test
 
+      - name: Clip-Manifest erzeugen (swift run abc-clips)
+        run: |
+          swift build -c release --product abc-clips
+          "$(swift build -c release --show-bin-path)/abc-clips" ABCSpiel/Resources/fragen.txt > "$RUNNER_TEMP/clips.json"
+          python3 -c "import json,sys; c=json.load(open(sys.argv[1])); print(len(c), 'Clips'); assert len(c) > 600" "$RUNNER_TEMP/clips.json"
+
+      - name: Stimm-Generator testen (Attrappe, ohne Modell)
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -q numpy soundfile
+          "$RUNNER_TEMP/venv/bin/python" tools/voice/generate_clips.py --engine dummy \
+            --manifest "$RUNNER_TEMP/clips.json" --ausgabe "$RUNNER_TEMP/clips" --nur-fragen --buchstabe A --limit 8
+          "$RUNNER_TEMP/venv/bin/python" tools/voice/generate_clips.py --engine say \
+            --manifest "$RUNNER_TEMP/clips.json" --ausgabe "$RUNNER_TEMP/clips" --keys q-b-bern,greeting-2 || true
+          ls -la "$RUNNER_TEMP/clips"
+          test "$(ls "$RUNNER_TEMP/clips"/*.m4a | wc -l)" -ge 8
+          afinfo "$RUNNER_TEMP/clips/q-a-aare.m4a" | grep -E "duration|Data format"
+
       - name: App für den iOS-Simulator bauen
         run: |
           xcodebuild \

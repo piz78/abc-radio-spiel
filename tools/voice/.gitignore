@@ -1,0 +1,6 @@
+# Python-Umgebungen und Vorschau
+.venv-*/
+vorschau/
+# Referenz-Aufnahmen deiner Stimme nicht ins Git (biometrische Daten)
+referenz/*
+!referenz/.gitkeep

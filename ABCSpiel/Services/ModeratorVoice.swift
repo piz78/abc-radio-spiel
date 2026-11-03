@@ -1,15 +1,21 @@
 import AVFoundation
 
-/// Die Stimme des Moderators (Text-to-Speech).
+/// Die Stimme des Moderators: spielt Clips (eigene/generierte Aufnahmen) ab
+/// und fällt für fehlende Clips auf die iOS-Sprachausgabe zurück.
 @MainActor
-final class ModeratorVoice: NSObject, AVSpeechSynthesizerDelegate {
+final class ModeratorVoice: NSObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDelegate {
     private let synthesizer = AVSpeechSynthesizer()
-    private var continuations: [ObjectIdentifier: CheckedContinuation<Void, Never>] = [:]
+    private var speechContinuations: [ObjectIdentifier: CheckedContinuation<Void, Never>] = [:]
+    private var player: AVAudioPlayer?
+    private var playerContinuation: CheckedContinuation<Void, Never>?
+    private var lineTask: Task<Void, Never>?
+    private var generation = 0
 
     var isEnabled = true
     var voiceIdentifier: String?
     /// 0.0 … 1.0 (AVSpeechUtterance-Skala)
     var rate: Float = 0.52
+    var clips: ClipLibrary?
 
     override init() {
         super.init()
@@ -53,59 +59,110 @@ final class ModeratorVoice: NSObject, AVSpeechSynthesizerDelegate {
         return Self.germanVoices().first ?? AVSpeechSynthesisVoice(language: "de-DE")
     }
 
-    // MARK: Sprechen
+    // MARK: Öffentliche Schnittstelle
 
-    private func makeUtterance(_ text: String) -> AVSpeechUtterance {
-        let utterance = AVSpeechUtterance(string: text)
+    /// Spricht sofort (unterbricht Laufendes) und wartet nicht.
+    func speak(_ line: ModeratorLine) {
+        guard isEnabled else { return }
+        stop()
+        let myGeneration = generation
+        lineTask = Task { await perform(line, generation: myGeneration) }
+    }
+
+    /// Spricht und wartet, bis der Satz fertig (oder abgebrochen) ist.
+    func say(_ line: ModeratorLine) async {
+        guard isEnabled, !Task.isCancelled else { return }
+        stop()
+        await perform(line, generation: generation)
+    }
+
+    func stop() {
+        generation += 1
+        lineTask?.cancel()
+        lineTask = nil
+        player?.stop()
+        player = nil
+        playerContinuation?.resume()
+        playerContinuation = nil
+        if synthesizer.isSpeaking || synthesizer.isPaused {
+            synthesizer.stopSpeaking(at: .immediate)
+        }
+        // Wartende sofort freigeben, damit kein Ablauf hängen bleibt.
+        let pending = speechContinuations.values
+        speechContinuations.removeAll()
+        pending.forEach { $0.resume() }
+    }
+
+    // MARK: Ablauf
+
+    private func perform(_ line: ModeratorLine, generation myGeneration: Int) async {
+        for clip in line.clips {
+            guard generation == myGeneration, !Task.isCancelled else { return }
+            if let url = clips?.url(for: clip.key) {
+                await play(url)
+            } else {
+                await utter(clip.text)
+            }
+        }
+    }
+
+    private func play(_ url: URL) async {
+        guard let newPlayer = try? AVAudioPlayer(contentsOf: url) else { return }
+        newPlayer.delegate = self
+        player = newPlayer
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            playerContinuation = continuation
+            if !newPlayer.play() {
+                finishPlayer(ObjectIdentifier(newPlayer))
+            }
+        }
+    }
+
+    private func finishPlayer(_ id: ObjectIdentifier) {
+        guard let player, ObjectIdentifier(player) == id else { return }
+        self.player = nil
+        playerContinuation?.resume()
+        playerContinuation = nil
+    }
+
+    private func utter(_ text: String) async {
+        let cleaned = text.trimmingCharacters(in: .whitespaces)
+        guard !cleaned.isEmpty else { return }
+        let utterance = AVSpeechUtterance(string: cleaned)
         utterance.voice = currentVoice
         utterance.rate = rate
         utterance.pitchMultiplier = 1.05
         utterance.preUtteranceDelay = 0
         utterance.postUtteranceDelay = 0.05
-        return utterance
-    }
-
-    /// Spricht sofort (unterbricht Laufendes) und wartet nicht.
-    func speak(_ text: String) {
-        guard isEnabled, !text.isEmpty else { return }
-        stop()
-        synthesizer.speak(makeUtterance(text))
-    }
-
-    /// Spricht und wartet, bis der Satz fertig (oder abgebrochen) ist.
-    func say(_ text: String) async {
-        guard isEnabled, !text.isEmpty, !Task.isCancelled else { return }
-        stop()
-        let utterance = makeUtterance(text)
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            continuations[ObjectIdentifier(utterance)] = continuation
+            speechContinuations[ObjectIdentifier(utterance)] = continuation
             synthesizer.speak(utterance)
         }
     }
 
-    func stop() {
-        if synthesizer.isSpeaking || synthesizer.isPaused {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-        // Wartende sofort freigeben, damit kein Ablauf hängen bleibt.
-        let pending = continuations.values
-        continuations.removeAll()
-        pending.forEach { $0.resume() }
+    private func finishSpeech(_ key: ObjectIdentifier) {
+        speechContinuations.removeValue(forKey: key)?.resume()
     }
 
-    private func finish(_ key: ObjectIdentifier) {
-        continuations.removeValue(forKey: key)?.resume()
-    }
-
-    // MARK: AVSpeechSynthesizerDelegate
+    // MARK: Delegates
 
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         let key = ObjectIdentifier(utterance)
-        Task { @MainActor in self.finish(key) }
+        Task { @MainActor in self.finishSpeech(key) }
     }
 
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         let key = ObjectIdentifier(utterance)
-        Task { @MainActor in self.finish(key) }
+        Task { @MainActor in self.finishSpeech(key) }
+    }
+
+    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        let id = ObjectIdentifier(player)
+        Task { @MainActor in self.finishPlayer(id) }
+    }
+
+    nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        let id = ObjectIdentifier(player)
+        Task { @MainActor in self.finishPlayer(id) }
     }
 }

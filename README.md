@@ -18,6 +18,8 @@ Fan-Projekt, nicht offiziell.
   Rekord, Siege, Durchschnitt.
 - 👥 **Mit Fründe spiele** – du moderierst, die Lösungen werden dir angezeigt.
 - 🗂️ **Chartestapel** – Karten für jeden Buchstaben generieren, anschauen und teilen.
+- 🗣️ **Eigene Stimme** – Moderator-Sätze in der App selber einsprechen, und mit einem lokalen
+  KI-Modell auf dem Mac alle Fragen in deiner Stimme erzeugen → [tools/voice/README.md](tools/voice/README.md).
 
 ## Starten
 
@@ -44,9 +46,11 @@ ABCSpiel/
   Core/        Spiellogik ohne UI (Karten, Runde, Antwortvergleich, Moderator-Texte, Statistik)
   Services/    Sprachausgabe, Spracherkennung, Audio-Session, Töne
   Views/       SwiftUI-Screens
-  Resources/   fragen.txt – die Fragen-Datenbank
+  Resources/   fragen.txt – die Fragen-Datenbank, Clips/ – generierte Sprach-Clips
 Tests/         Unit-Tests der Core-Logik (swift test)
 tools/         validate_questions.py – prüft die Fragen-Datenbank
+tools/voice/   Stimm-Klon auf dem Mac (generate_clips.py, setup.sh)
+tools/clip-manifest/  `swift run abc-clips` – Liste aller Sprech-Clips
 ```
 
 ## Fragen ergänzen

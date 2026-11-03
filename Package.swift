@@ -8,9 +8,11 @@ let package = Package(
     platforms: [.macOS(.v14), .iOS(.v17)],
     products: [
         .library(name: "ABCCore", targets: ["ABCCore"]),
+        .executable(name: "abc-clips", targets: ["abc-clips"]),
     ],
     targets: [
         .target(name: "ABCCore", path: "ABCSpiel/Core"),
+        .executableTarget(name: "abc-clips", dependencies: ["ABCCore"], path: "tools/clip-manifest"),
         .testTarget(name: "ABCCoreTests", dependencies: ["ABCCore"], path: "Tests/ABCCoreTests"),
     ]
 )
