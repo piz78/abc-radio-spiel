@@ -1,0 +1,607 @@
+# ABC – Fragen-Datenbank
+# Format: Buchstabe | Frage | Antwort | Alternativen (mit ; getrennt)
+# Jede Antwort muss mit dem Buchstaben beginnen.
+
+A | Hauptort vom Kanton Aargau? | Aarau
+A | Fluss, wo dur Bärn fliesst? | Aare
+A | Grosse Greifvogel, König vo de Lüft? | Adler
+A | Chliinschte Kontinent vo de Wält? | Australien | Australie
+A | D'Ziit vor Wiehnachte mit em Kranz und vier Cherze? | Advent | Adventsziit; Adventszeit
+A | Obscht, wo em Newton uf de Chopf gheit isch? | Apfel | Öpfel
+A | Hauptstadt vo Griecheland? | Athen
+A | Gröschte Kontinent vo de Wält? | Asien | Asie
+A | Insekt, wo i Kolonie läbt und Hüüfe baut? | Ameise | Ameisi; Ameisli
+A | Anders Wort für Dokter? | Arzt | Ärztin
+A | Hauptort vo Appenzell Innerrhode? | Appenzell
+A | Monet nach em März? | April
+A | Monet mit em Nationalfiirtag? | August | Auguscht
+A | Mit dem gseht mer? | Auge | Aug; Auge
+A | Fisch, wo usgseht wie e Schlange? | Aal
+A | Grossi Gebirgskette dur d'Schwiiz? | Alpen | Alpe
+A | Vorname vom Einstein? | Albert
+A | Liechts Metall für Folie und Getränkedose? | Aluminium | Alu
+A | Hauptstadt vo de Niederlande? | Amsterdam
+A | Kontinent mit de Sahara? | Afrika
+A | Gröschte Fluss vo Südamerika? | Amazonas
+A | Tier, wo uf Bäum chlätteret und Banane frisst? | Affe
+A | Körperteil zwüsche Schultere und Hand? | Arm
+A | Grüeni Frucht, us dere mer Guacamole macht? | Avocado
+A | Zahl zwüsche sibe und nüün? | Acht
+
+B | Bundesstadt vo de Schwiiz? | Bern | Bärn
+B | Stadt am Rhyknie mit de Fasnacht? | Basel
+B | Hauptstadt vo Dütschland? | Berlin
+B | Hauptstadt vo Belgie? | Brüssel
+B | Wappetier vo Bärn? | Bär
+B | Gääli, chrummi Frucht? | Banane
+B | Insekt, wo Honig macht? | Biene | Bieli
+B | Grundnahrigsmittel us Mehl, Wasser und Hefe? | Brot
+B | Wird us Rahm gmacht und mer strichts ufs Brot? | Butter | Anke
+B | Hät en Stamm, Äscht und Blätter? | Baum
+B | Hilft, wenn mer schlächt gseht? | Brille
+B | Rund, und mer schuttet demit? | Ball
+B | Mer list drin, und es hät Siite? | Buch
+B | S'Matterhorn isch en …? | Berg | Bärg
+B | Zweisprachigi Stadt am gliichnamige See im Seeland? | Biel | Biel Bienne
+B | See zwüsche Schwiiz, Dütschland und Öschtriich? | Bodensee
+B | Gröschts Land vo Südamerika? | Brasilien | Brasilie
+B | Chunt vor em Donner? | Blitz
+B | Schafft uf em Hof mit de Chüe? | Bauer | Buur; Bäuerin
+B | Det drin schlafsch? | Bett
+B | Det fahred d'Züg ab? | Bahnhof
+B | Farb vom Himmel? | Blau
+B | Obscht, und au es Liecht a de Decki? | Birne | Bire
+B | Füehrt über en Fluss? | Brücke | Brugg
+B | Komponischt vo de Mondscheinsonate? | Beethoven
+B | Schwiizer Regierig mit sibe Mitglieder? | Bundesrat
+B | Olma-Spezialität us St. Galle? | Bratwurst | Bratwurscht
+
+C | Hauptort vom Kanton Graubünde? | Chur
+C | Land mit de Grosse Muur? | China
+C | Grosses Streichinstrument, wo mer zwüsche de Bei hebt? | Cello
+C | Rechner, a dem mer schafft und gamet? | Computer
+C | Lustigi Figur im Zirkus mit rotere Nase? | Clown
+C | Ferie im Zält oder im Wohnwage? | Camping
+C | Kafi mit Milchschuum? | Cappuccino
+C | Echse, wo d'Farb wächsle cha? | Chamäleon
+C | Länglichs Land a de Weschtküschte vo Südamerika? | Chile
+C | Gruppe, wo zäme singt? | Chor
+C | Bruuns Süessgetränk mit Kohlesüüri? | Cola
+C | Gschicht i Bildli mit Sprechblase? | Comic | Comics
+C | Französische Schuumwii? | Champagner
+C | Gwürzmischig us Indie? | Curry
+C | Sohn vom Onkel oder vo de Tante? | Cousin
+C | Anders Wort für Sofa? | Couch
+C | Schuelfach mit Reagenzgläser? | Chemie
+C | Hundertschtel vom Euro? | Cent
+C | Gägeteil vo Ordnig? | Chaos
+C | Det sitzt de Pilot im Flugzüüg? | Cockpit
+C | Bekannte wiisse Pilz us em Lade? | Champignon | Champignons
+C | Wird a Wiehnachte gschmückt? | Christbaum | Chrischtbaum
+C | Dünne französische Pfannkuche? | Crêpe | Crepe; Crepes
+C | Iiheit für d'Temperatur bi üs? | Celsius | Grad Celsius
+C | Dünni, früttierti Härdöpfelscheibe im Sack? | Chips
+
+D | Bündner Ort vom WEF? | Davos
+D | Land mit de Hauptstadt Kopehage? | Dänemark
+D | Fluss dur Wien und Budapescht? | Donau
+D | Intelligents Meeressüügetier, wo us em Wasser gumpet? | Delfin | Delphin
+D | Ganz obe uf em Huus? | Dach
+D | Tag nach em Mäntig? | Dienstag | Ziischtig
+D | Letschte Monet vom Jahr? | Dezember | Dezämber
+D | Füürspeiends Fabeltier? | Drache | Drachen
+D | Chunt nach em Blitz? | Donner
+D | Chliiner als e Stadt? | Dorf
+D | Us Blech, mer füllt Ravioli drii? | Dose | Büchse
+D | Dickschte Finger a de Hand? | Daumen | Dume; Duume
+D | Usgstorbni Urziit-Echse? | Dinosaurier | Dino; Saurier
+D | Nördlichs Nachbarland vo de Schwiiz? | Deutschland | Dütschland
+D | Härtischte Edelstei? | Diamant
+D | Leitet es Orchester? | Dirigent | Dirigentin
+D | Zahl nach zwei? | Drei | Drü
+D | Det wäscht mer sich im Stah? | Dusche
+D | Hauptstadt vo Irland? | Dublin
+D | Kamel mit nur eim Höcker? | Dromedar
+D | Gfühl, wenn mer dringend öppis trinke sött? | Durst
+D | Waldtier mit schwarz-wiisse Striife im Gsicht? | Dachs
+D | Gerät, wo Dokumänt uf Papier bringt? | Drucker
+D | Schwiizer Autor vo de «Physiker»? | Dürrenmatt
+D | Süessi bruuni Frucht vo de Palme? | Dattel | Datteln
+
+E | Region bi Bärn mit em Lochchäs? | Emmental | Ämmital; Emmetal
+E | Gröschts Landtier? | Elefant
+E | Bärg mit de berüchtigte Nordwand? | Eiger
+E | S'Huehn leit es …? | Ei
+E | Gfrorenes Wasser? | Eis | Iis
+E | Graus Tier mit lange Ohre, gilt als stur? | Esel
+E | Vogel, wo i de Nacht jagt und huuhuu macht? | Eule | Ule
+E | Hät Flügel und e Heiligeschii? | Engel
+E | Roti Beeri im Früehlig? | Erdbeere | Erdbeeri
+E | Land vo de Beatles? | England
+E | Vogel, wo quakt? | Ente | Änte
+E | Währig vo Dütschland? | Euro
+E | Kontinent, wo d'Schwiiz drin liit? | Europa
+E | Rots Tierli mit buschigem Schwanz, sammlet Nüss? | Eichhörnchen | Eichhörnli; Eichhorn
+E | Zahl nach zäh? | Elf
+E | Planet, wo mir druf läbed? | Erde
+E | Anders Wort für Zug? | Eisenbahn | Iisebahn
+E | Wahrzeiche vo Paris? | Eiffelturm
+E | Grosse Hirsch us Skandinavie? | Elch
+E | Suuri Zuetat für d'Salatsauce? | Essig
+E | Gelenk zmitzt im Arm? | Ellbogen | Elleboge; Ellboge
+E | Chübel uf Hochdütsch? | Eimer
+E | Physiker vo de Relativitätstheorie? | Einstein
+E | Chliine, starche Kafi? | Espresso
+E | Chliini grüeni Chugle us de Schote? | Erbse | Erbsli; Erbsen
+
+F | Land mit de Hauptstadt Paris? | Frankreich | Frankriich
+F | Zweisprachige Kanton a de Saane? | Freiburg | Fribourg
+F | Schwümmt und hät Schuppe? | Fisch
+F | Rots Waldtier, gilt als schlau? | Fuchs
+F | Quakt im Weiher? | Frosch
+F | Brännt und isch heiss? | Feuer | Füür
+F | Glas i de Wand zum usegüxle? | Fenster | Feischter
+F | Chäs-Gricht im Caquelon? | Fondue
+F | Sport mit 22 Spieler und eim Ball? | Fussball | Fuessball
+F | Chürzischte Monet? | Februar
+F | Tag vor em Samschtig? | Freitag | Fritig
+F | Land mit de Hauptstadt Helsinki? | Finnland
+F | Flüügt mit Passagier dur d'Luft? | Flugzeug | Flüger; Flugzüüg
+F | Süügetier, wo flüügt und chopfvoraa abe schlaft? | Fledermaus
+F | Vögel händ …? | Federn | Feder; Federe
+F | Füf a jedere Hand? | Finger
+F | Velo uf Hochdütsch? | Fahrrad
+F | Warme Fallwind i de Alpe? | Föhn
+F | Rosarote Vogel, stoht uf eim Bei? | Flamingo
+F | Summt ume und sitzt uf em Ässe? | Fliege
+F | Toskanischi Stadt mit de Uffizie? | Florenz
+F | Nachname vo de Schwiizer Tennislegände Roger? | Federer
+F | Lösched Bränd? | Feuerwehr | Füürwehr
+F | Fescht mit Maske und Guggemusig? | Fasnacht | Fasnet
+F | Zahl nach vier? | Fünf | Füf
+F | Schnelle Greifvogel? | Falke
+
+G | Stadt am Lac Léman mit em Jet d'eau? | Genf | Gänf; Genève
+G | Kanton mit de Landsgmeind und em Fridolin im Wappe? | Glarus
+G | Gröschte Kanton vo de Schwiiz? | Graubünden | Graubünde; Bünde
+G | Bekanntischte Alpe-Tunnel? | Gotthard
+G | Tier mit em längschte Hals? | Giraffe
+G | Gröschte Menscheaffe? | Gorilla
+G | Saiteinstrument fürs Lagerfüür? | Gitarre
+G | Bsteck mit Zinke? | Gabel
+G | Gälbs Edelmetall? | Gold
+G | Farb vom Gras? | Grün
+G | Hanget im Chilcheturm? | Glocke | Glogge
+G | Wachst uf de Wiese, und d'Chue frissts? | Gras
+G | Land mit de Akropolis? | Griechenland | Griecheland
+G | Stück Land hinter em Huus mit Blueme? | Garten | Garte
+G | Blitz und Donner zäme? | Gewitter
+G | Anders Wort für Violine? | Geige
+G | Grosse wiisse Vogel, schnatteret uf em Hof? | Gans
+G | Grüens Gmües, mer leit's au in Essig ii? | Gurke | Gurkli; Essiggurke
+G | Schwiizer Wort für Croissant? | Gipfeli
+G | Ewigs Iis i de Bärge? | Gletscher
+G | Fescht, wo mer es Jahr älter wird? | Geburtstag | Geburi; Geburtstag
+G | Chlätteret i de Felse und hät chliini Hörnli? | Gämse | Gemse; Gämsi
+G | Farb vo de Zitrone? | Gelb | Gääl
+G | Franke und Rappe sind …? | Geld
+G | Tuusigschtel vomene Kilo? | Gramm
+
+H | Hauptort vo Appenzell Ausserrhode? | Herisau
+H | Bellt? | Hund
+H | Det wohnt mer drin? | Haus | Huus
+H | Dütschi Hafestadt a de Elbe? | Hamburg
+H | Land vo de Tulpe und Windmühlene? | Holland | Niederlande
+H | Langohr, wo a Oschtere d'Eier bringt? | Hase | Osterhase
+H | Pumpt s'Bluet dur de Körper? | Herz
+H | Am Arm, mit füf Finger? | Hand
+H | Chopfbedeckig mit Rand? | Hut | Huet
+H | Süess und vo de Biene? | Honig
+H | Leit Eier? | Huhn | Huen; Henne; Hüehnli
+H | Werkzüüg für Negel? | Hammer
+H | Flüügt mit Rotor? | Helikopter | Heli
+H | Roti Beeri, wo hohl isch? | Himbeere | Himbeeri
+H | Meitli vo de Johanna Spyri? | Heidi
+H | Sport mit Puck und Stock? | Hockey | Eishockey
+H | Jahresziit nach em Summer? | Herbst | Herbscht
+H | Waldtier mit Gweih? | Hirsch
+H | Det übernachtet mer i de Ferie? | Hotel
+H | Gföhrliche Raubfisch mit Rückeflosse? | Hai
+H | Chleidigsstück für d'Bei? | Hose
+H | Wachst uf em Chopf? | Haar | Hoor; Haare
+H | Iischörner, wo vom Himmel gheied? | Hagel
+H | Dicki, pelzigi Biene? | Hummel
+H | Det leged d'Schiff aa? | Hafen | Hafe
+
+I | Land vo de Pizza? | Italien | Italie
+I | Land mit em Taj Mahal? | Indien | Indie
+I | Stachligs Tier, wo sich iirollt? | Igel
+I | Land rundum vo Wasser umgäh? | Insel
+I | Ort zwüsche Thuner- und Brienzersee? | Interlaken | Interlake
+I | Huus us Schnee? | Iglu
+I | Land mit Vulkan und Geysir im höche Norde? | Island
+I | Grüeni Insel mit de Hauptstadt Dublin? | Irland
+I | Scharfi Wurzle für Tee? | Ingwer
+I | Land mit de Hauptstadt Teheran? | Iran
+I | Tier mit sechs Bei? | Insekt
+I | En Iifall? | Idee
+I | Hält Biene? | Imker | Imkerin
+I | Fluss dur s'Engadin? | Inn
+I | Land mit de Stadt Tel Aviv? | Israel
+I | Gröschti Stadt vo de Türkei? | Istanbul
+I | Marder, wo stinkt? | Iltis
+I | Inselstaat mit Bali? | Indonesien | Indonesie
+I | Konstruiert Brugge und Maschine? | Ingenieur | Ingenieurin
+I | Schützt vor Chrankheite mit ere Sprütze? | Impfung | Impfig
+I | Gitarre oder Klavier isch es …? | Instrument
+I | Farbige Teil vom Aug? | Iris
+I | Hauptstadt vom Tirol? | Innsbruck
+
+J | Jüngschte Kanton vo de Schwiiz? | Jura
+J | Erschte Monet vom Jahr? | Januar
+J | Monet nach em Juni? | Juli
+J | Monet vor em Juli? | Juni
+J | Land vo de ufgehende Sunne? | Japan
+J | Bärg näbed Eiger und Mönch? | Jungfrau
+J | Mer leits über, wenns chalt isch? | Jacke | Jagge
+J | Suurs Milchprodukt im Bächer? | Joghurt | Jogurt; Yoghurt
+J | Gaht mit em Gwehr in Wald uf d'Pirsch? | Jäger | Jägerin
+J | Gflecktes Raubchatz us Südamerika? | Jaguar
+J | Hät 365 Täg? | Jahr | Johr
+J | Gröschte Planet vom Sonnesystem? | Jupiter
+J | Düseflugzüüg? | Jet
+J | Typische Schwiizer Gsang mit Chopfstimm? | Jodeln | Jodel; Jodle
+J | Schwiizer Chartespiel mit Schelle und Eichle? | Jass | Jasse
+J | Blaui Hose us Denim? | Jeans
+J | Spezialcharte, wo für alles gilt? | Joker
+J | Insle vom Bob Marley? | Jamaika
+J | Wirft im Zirkus Bäll i d'Luft? | Jongleur | Jongleurin
+J | Heiligi Stadt für drü Religione? | Jerusalem
+J | Fiir zum runde Jahrestag? | Jubiläum
+J | Schriibt für d'Ziitig? | Journalist | Journalistin
+J | Japanischi Kampfsportart mit Gurt? | Judo
+J | A Wiehnachte fiired mer sini Geburt? | Jesus
+
+K | Git Milch und hät e Glogge? | Kuh | Chue
+K | Emmentaler, Gruyère und Appezäller sind …? | Käse | Chäs
+K | Miaut? | Katze | Chatz
+K | Hät en Turm mit Glogge, mer gaht am Sunntig dri? | Kirche | Chile; Chilche
+K | Thurgauer Stadt a de Grenze zu Konstanz? | Kreuzlingen | Kreuzlinge
+K | Land mit em Ahornblatt i de Fahne? | Kanada
+K | Hüpft und hät en Buuchbütel? | Känguru
+K | Muntermacher am Morge? | Kaffee | Kafi
+K | Härdöpfel uf Hochdütsch? | Kartoffel
+K | Gföhrlichs Reptil im Nil? | Krokodil
+K | Wüeschtetier mit zwei Höcker? | Kamel
+K | Brännt mit ere Flamme und git Liecht? | Kerze | Cherze
+K | Instrument mit schwarze und wiisse Taste? | Klavier
+K | Packsch für d'Ferie? | Koffer
+K | Treit e Chrone? | König | Königin
+K | Sitzt uf em Hals? | Kopf | Chopf
+K | Det luegt mer Film uf de grosse Liiwand? | Kino
+K | Orangs Gmües a Halloween? | Kürbis
+K | Süesses Gebäck zum Geburtstag? | Kuchen | Chueche
+K | Grüeni Frucht mit bruuner, haarige Haut? | Kiwi
+K | Bär-ähnlichs Tier, frisst Eukalyptus? | Koala
+K | Hauptstadt vo Ägypte? | Kairo
+K | Zeigt immer Norde aa? | Kompass
+K | Meertier mit acht Arme? | Krake | Oktopus
+K | Land a de Adria mit Split und Dubrovnik? | Kroatien | Kroatie
+K | Hauptstadt vo Dänemark? | Kopenhagen | Kopehage
+
+L | Stadt mit de Kapellbrugg? | Luzern | Luzärn
+L | Hauptort vom Kanton Waadt? | Lausanne
+L | Gröschti Stadt im Tessin? | Lugano
+L | Hauptort vo Basel-Landschaft? | Liestal
+L | Hauptstadt vo England? | London
+L | König vo de Tier? | Löwe | Leu
+L | Fürstetum näbed de Schwiiz? | Liechtenstein
+L | Git Liecht uf em Nachttischli? | Lampe
+L | Bsteck für d'Suppe? | Löffel
+L | Mit dere chlätteret mer ufe? | Leiter | Leitere
+L | Unterrichtet i de Schuel? | Lehrer | Lehrerin
+L | Süesses Getränk mit Zitrone und Bläterli? | Limonade | Limo
+L | Tier us de Ande, wo spöit? | Lama
+L | Insekt mit vier durchsichtige Flügel am Weiher? | Libelle
+L | Schneemasse, wo de Hang abe donnered? | Lawine | Lauene
+L | Zieht de Zug? | Lokomotive | Lok
+L | Mit dene git mer es Müntschi? | Lippen | Lippe
+L | Gägeteil vo Dunkelheit? | Licht | Liecht
+L | Gflecktes Raubchatz us Afrika? | Leopard
+L | Rosarote Fisch, schwümmt flussufwärts? | Lachs
+L | Hauptstadt vo Portugal? | Lissabon
+L | Langs, grüens Gmües für d'Suppe? | Lauch
+L | Mit dem ziet mer grad Strich? | Lineal
+L | Organ, wo s'Bluet entgiftet? | Leber
+L | Mit dem stüürsch s'Velo? | Lenker | Lenkstange
+
+M | Bekanntischte Bärg vo de Schwiiz? | Matterhorn
+M | Chliis graus Tier, d'Chatz jagt's? | Maus | Muus
+M | Wiisses Getränk vo de Chue? | Milch
+M | Liechtet i de Nacht am Himmel? | Mond
+M | Monet nach em April? | Mai
+M | Monet nach em Februar? | März | Märze
+M | Erschte Tag vo de Wuche? | Montag | Mäntig
+M | Konfitüre uf Hochdütsch? | Marmelade
+M | Mit dem schniidet mer? | Messer
+M | Land vo de Sombrero und Tacos? | Mexiko
+M | Hauptstadt vo Spanie? | Madrid
+M | Modestadt in Norditalie? | Mailand | Milano
+M | De rot Planet? | Mars
+M | Komponischt us Salzburg? | Mozart
+M | Pfiift i de Alpe und schlaft de ganz Winter? | Murmeltier | Mungg
+M | Vogel am Meer, wo kreischt? | Möwe
+M | Warmi Chappe für de Winter? | Mütze
+M | Grossi Frucht, usse grüen und inne rot? | Melone | Wassermelone
+M | Malt Bilder oder Wänd? | Maler | Malerin
+M | Sticht i de Nacht und summt? | Mücke | Mugge
+M | Lange, warme Chittel? | Mantel
+M | Gääli Cholbe, mer macht Popcorn drus? | Mais
+M | Schale vomene Meertier am Strand? | Muschel
+M | Hauptstadt vo Russland? | Moskau
+M | Mitti vo de Wuche? | Mittwoch | Mittwuch
+M | Ort vom berüehmte Jazz Festival am Gänfersee? | Montreux
+
+N | Kanton und Stadt am gliichnamige See, uf Französisch Neuchâtel? | Neuenburg | Neuchâtel; Nöieburg
+N | Mit dere schmöckt mer? | Nase
+N | Det brüeted d'Vögel? | Nest | Näscht
+N | Grau, mer gseht nüt, bsunders im Herbscht? | Nebel
+N | Land vo de Fjord? | Norwegen | Norwege
+N | Längschte Fluss vo Afrika? | Nil
+N | Mit dere näit mer? | Nadel | Nodle
+N | S'Eichhörnli sammlet …? | Nüsse | Nuss; Nüss
+N | Teigware, Spaghetti sind …? | Nudeln | Nudle; Nudel
+N | Monet vor em Dezember? | November
+N | Gägeteil vom Tag? | Nacht
+N | Grosses Tier mit Horn uf de Nase? | Nashorn
+N | Üsserschte Planet vom Sonnesystem? | Neptun
+N | Nördlichschte Punkt vo de Erde? | Nordpol
+N | Wohnt grad näbe dir? | Nachbar | Nochber; Nachbarin
+N | Zahl vor zäh? | Neun | Nüün
+N | Stadt vo de Freiheitsstatue? | New York
+N | Kanton mit em Hauptort Stans? | Nidwalden | Nidwalde
+N | Dicks Tier im afrikanische Fluss? | Nilpferd | Flusspferd
+N | Chunt am 6. Dezember mit em Schmutzli? | Nikolaus | Samichlaus
+N | Mer schlaht ihn mit em Hammer i d'Wand? | Nagel
+N | Mit dem fischt mer, und im Tennis hets eis? | Netz
+N | Organ, wo Urin produziert? | Niere
+N | Singvogel, wo i de Nacht singt? | Nachtigall
+N | Süessi Masse us Nüss und Zucker? | Nougat | Nugat
+
+O | Bahnknotepunkt im Kanton Solothurn? | Olten | Olte
+O | Kanton mit em Hauptort Sarne? | Obwalden | Obwalde
+O | Mit dem ghört mer? | Ohr
+O | Frucht und Farb zugliich? | Orange
+O | Monet vor em November? | Oktober
+O | Fescht mit Eier und Hase? | Ostern | Oschtere
+O | Grosses Meer, zum Biispiel de Atlantik? | Ozean
+O | Mueter vo de Mueter? | Oma | Grosi
+O | Brüeder vom Vater? | Onkel
+O | Det backt mer s'Brot? | Ofen | Ofe
+O | Grüen oder schwarz, us dere macht mer Öl? | Olive | Olivä
+O | Vieli Musiker mit eim Dirigent? | Orchester
+O | Hauptstadt vo Norwege? | Oslo
+O | Marder, wo im Wasser läbt und Fisch frisst? | Otter | Fischotter
+O | Kastrierte Stier? | Ochse
+O | Meer zwüsche Schwede und Dütschland? | Ostsee
+O | Grosses Instrument mit Pfiiffe i de Chile? | Orgel
+O | Grüene Fleck i de Wüeschti? | Oase
+O | Vater vom Vater? | Opa | Grossvater; Grossvati
+O | Theater mit Gsang, zum Biispiel Carmen? | Oper
+O | Spiel alli vier Jahr mit füf Ring? | Olympia | Olympische Spiele
+O | Eierspeis us de Pfanne? | Omelette | Omelett
+O | Himmelsrichtig, wo d'Sunne ufgaht? | Osten | Ost
+O | Hauptstadt vo Kanada? | Ottawa
+O | Rote Menscheaffe us Borneo? | Orang-Utan | Orang Utan
+
+P | Hausbärg vo Luzärn? | Pilatus
+P | Stadt vom Eiffelturm? | Paris
+P | Vogel, wo nid flüüge cha und im Frack ume watschlet? | Pinguin
+P | Italienische Fladen mit Tomate und Mozzarella? | Pizza
+P | Wiehert? | Pferd | Ross
+P | Bunte Vogel, wo rede cha? | Papagei
+P | Regelt de Verchehr und fangt Schelme? | Polizei
+P | Bringt Brief und Päckli? | Post | Pöstler; Pöschtler
+P | Land mit de Hauptstadt Lissabon? | Portugal
+P | Hauptstadt vo Tschechie? | Prag
+P | Schwarz-wiisse Bär us China? | Panda
+P | Gmües in rot, gääl und grüen, bi üs Peperoni gnannt? | Paprika | Peperoni
+P | Gwürz, gseht us wie schwarzi Chügeli? | Pfeffer
+P | Wachst im Wald, s'Eierschwämmli isch eine? | Pilz
+P | Seeräuber mit Augeklappe? | Pirat
+P | Erde, Mars und Venus sind …? | Planeten | Planet; Planete
+P | Grabmal vo de Pharaone? | Pyramide | Pyramiden
+P | Mit dem malt mer? | Pinsel
+P | Warms Oberteil us Wulle? | Pullover | Pulli
+P | Det drin brätlet mer d'Rösti? | Pfanne
+P | Anders Wort für Zwetschge? | Pflaume
+P | Baum am Strand mit Kokosnüss? | Palme
+P | Spiel mit vielne Teili, wo mer zämesetzt? | Puzzle
+P | Land mit de Hauptstadt Warschau? | Polen
+P | Ässe uf ere Decki im Freie? | Picknick
+P | Hauptstadt vo China? | Peking | Beijing
+
+R | Fluss dur Basel? | Rhein | Rhy
+R | Hauptstadt vo Italie? | Rom
+R | Blueme mit Dorne? | Rose
+R | Wasser, wo vom Himmel chunt? | Regen | Räge
+R | Farbige Boge am Himmel? | Regenbogen | Rägeboge
+R | Bärner Härdöpfelgricht us de Pfanne? | Rösti
+R | Gschmolzene Chäs mit Gschwellti? | Raclette
+R | Flüügt is Wältall? | Rakete
+R | Grösser als e Muus, läbt i de Kanalisation? | Ratte
+R | S'Bambi isch es …? | Reh
+R | Ganz schwarze Vogel? | Rabe | Rapp
+R | Farb vo de Schwiizer Fahne? | Rot
+R | Gröschts Land vo de Wält? | Russland
+R | Treit mer uf em Rugge bim Wandere? | Rucksack
+R | Treit mer am Finger nach em Hürate? | Ring | Ehering
+R | Det lauft s'ABC! | Radio
+R | Hinterseite vom Körper? | Rücken | Rugge
+R | Chörnli für s'Risotto? | Reis
+R | Fluss dur s'Wallis und Gänf? | Rhone | Rhône; Rotten
+R | Gägeteil vo Zwerg? | Riese
+R | Treit e Rüschtig und wohnt i de Burg? | Ritter
+R | Vorname vom Federer? | Roger
+R | Gmäjts Gras im Garte? | Rasen | Rase
+R | Meersüüger mit Flosse, liit uf em Iis? | Robbe
+R | Orangs Gmües, de Hase frisst's gern? | Rüebli | Karotte
+R | Königin vo de Bärge am Vierwaldstättersee? | Rigi
+
+S | Höchschte Bärg vom Alpstei? | Säntis
+S | Schönschti Barockstadt vo de Schwiiz, a de Aare? | Solothurn
+S | Kanton mit em Rhyfall? | Schaffhausen | Schaffhuuse
+S | Kanton, wo de Schwiiz de Name gäh hät? | Schwyz
+S | Hauptort vom Wallis? | Sion | Sitten
+S | Stärn im Zentrum vo üsem Sonnesystem? | Sonne | Sunne
+S | Wiiss und gheit im Winter vom Himmel? | Schnee
+S | Schwiizer Spezialität us Kakao? | Schokolade | Schoggi
+S | Git Wulle? | Schaf
+S | Grunzt und suhlt sich im Dräck? | Schwein | Säuli; Sau
+S | Tier ohni Bei, wo zischt? | Schlange
+S | Tier mit acht Bei, baut es Netz? | Spinne
+S | Druf sitzt mer am Tisch? | Stuhl | Stuel
+S | Land vom Flamenco? | Spanien | Spanie
+S | Land mit de Hauptstadt Stockholm? | Schweden | Schwede
+S | Tag vor em Sunntig? | Samstag | Samschtig
+S | Letschte Tag vo de Wuche? | Sonntag | Sunntig
+S | Monet nach em Auguscht? | September
+S | Heissischti Jahresziit? | Sommer | Summer
+S | Planet mit Ring? | Saturn
+S | Funklet i de Nacht am Himmel? | Stern | Stärn; Sterne
+S | Mit dene fahrt mer de Hang abe? | Ski | Skis
+S | Mit dere schniidet mer Papier? | Schere
+S | Insekt mit farbige Flügel, isch vorher e Raupe gsi? | Schmetterling | Schmetterlig; Summervogel
+S | Wiisse Vogel mit langem Hals uf em See? | Schwan
+S | Tier mit Panzer, wo langsam lauft? | Schildkröte | Schildchrott
+
+T | Garnisonsstadt im Bärner Oberland mit em Schloss? | Thun
+T | Italienischsprachige Kanton? | Tessin | Ticino
+T | Kanton am Bodensee, wo mer «Moschtindie» seit? | Thurgau
+T | Rots Gmües für Ketchup? | Tomate | Tomaten
+T | Gstreifti Raubchatz? | Tiger
+T | Det dra isst mer? | Tisch
+T | Mit dem rüeft mer aa? | Telefon
+T | Hochs Gebäude, zum Biispiel bi de Chile? | Turm
+T | Blueme us Holland? | Tulpe
+T | Vogel uf em Platz, Friedessymbol? | Taube | Tube
+T | Sport mit Schläger, Netz und gälbem Ball? | Tennis
+T | Heisses Getränk mit Chrüter? | Tee
+T | Grosse Chueche mit Creme? | Torte | Turte
+T | Fahrzüüg vom Buur? | Traktor
+T | Blechblasinstrument? | Trompete
+T | Det druf isch s'Ässe? | Teller
+T | Mer gaht dur sie ine? | Tür | Türe
+T | Stufe zum ufe laufe? | Treppe | Stäge
+T | Hauptstadt vo Japan? | Tokio | Tokyo
+T | Liecht für i d'Hosetäsche? | Taschenlampe | Taschelampe
+T | Füehrt dur de Bärg? | Tunnel
+T | Plüschtier zum Kuschle? | Teddybär | Teddy
+T | Spritzt Tinte, wenn er Angst hät? | Tintenfisch | Krake
+T | Schwiizer Nationalheld mit de Armbrust? | Tell | Wilhelm Tell
+T | Land mit Istanbul und Ankara? | Türkei
+
+U | Urkanton mit em Stier im Wappe? | Uri
+U | Zeigt d'Ziit aa? | Uhr
+U | Land mit de Hauptstadt Budapescht? | Ungarn
+U | Usserirdischs Flugobjekt? | Ufo
+U | Schiff, wo under Wasser fahrt? | U-Boot | Unterseeboot; U Boot
+U | Gröschti Eule vo Europa? | Uhu
+U | Hochschuel zum Studiere? | Universität | Uni
+U | Ferie uf Hochdütsch? | Urlaub
+U | Chleidigsstück under de Hose? | Unterhose | Underhose
+U | Gebirge zwüsche Europa und Asie? | Ural
+U | Land mit de Hauptstadt Kiew? | Ukraine
+U | Erschte Fuessball-Wältmeischter vo 1930? | Uruguay
+U | Land vo de Sterne und Striife? | USA | United States; Amerika
+U | Fasnachtsparade dur d'Stadt? | Umzug
+U | Crash mit em Auto? | Unfall
+U | Gliichi Chleider vo Soldate und Polizei? | Uniform
+U | Planet nach em Saturn? | Uranus
+U | Sturm mit Hagel und Blitz? | Unwetter
+U | Anders Wort für Dschungel? | Urwald
+U | Lektion i de Schuel? | Unterricht
+U | Rand vom See oder vom Fluss? | Ufer
+U | Zürcher Stadt am Greifesee? | Uster
+U | Beruf, wo Uhre repariert? | Uhrmacher | Uhrmacherin
+U | Ohni Ändi? | Unendlich
+U | Chliine Teller under de Tasse? | Untertasse | Untertassli
+
+V | Ort am Gänfersee mit ere Gable im Wasser? | Vevey
+V | Schwiizer Wort für Fahrrad? | Velo
+V | Hät Federe und flüügt? | Vogel
+V | Bärg, wo Lava spöit? | Vulkan
+V | Ehemaa vo de Mueter, Papi? | Vater | Vatter; Vati
+V | Det stellt mer Blueme ine? | Vase
+V | Stadt mit Gondle und Kanäl? | Venedig
+V | Zweitnöchschte Planet zur Sunne? | Venus
+V | Gwürz für Glace, us ere Schote? | Vanille
+V | Anders Wort für Geige? | Violine
+V | Isst kei Fleisch? | Vegetarier | Vegi; Vegetarierin
+V | Autos, Busse und Velos uf de Strass? | Verkehr | Verchehr
+V | Hanget vor em Fänschter? | Vorhang
+V | Zahl nach drü? | Vier
+V | Suugt Bluet, wie de Dracula? | Vampir
+V | Chliinschte Staat vo de Wält? | Vatikan | Vatikanstadt
+V | Chunt vor de Hochziit? | Verlobung
+V | Skigebiet im Wallis bi de 4 Vallées? | Verbier
+V | Land mit de Hauptstadt Hanoi? | Vietnam
+V | Chliini violetti Blueme im Früehlig? | Veilchen | Veieli
+V | Wenn de Mond ganz rund isch? | Vollmond
+V | Ruedi oder Vreni isch en …? | Vorname
+V | Film uf em Handy? | Video
+V | Dokument zum Iireise in es Land? | Visum
+V | Schwiizer Goldmünze mit eme Fraue-Chopf? | Vreneli | Goldvreneli
+
+W | Zweitgröschti Stadt vom Kanton Züri? | Winterthur
+W | Kanton mit em Matterhorn? | Wallis
+W | Hauptstadt vo Öschtriich? | Wien
+W | Hauptstadt vo de USA? | Washington
+W | Heult de Mond aa? | Wolf
+W | Gröschts Tier vo de Wält? | Wal | Blauwal
+W | H2O? | Wasser
+W | Wiiss oder grau am Himmel? | Wolke | Wolche
+W | Chältischti Jahresziit? | Winter
+W | Vieli Bäum binenand? | Wald
+W | De Cervelat isch e …? | Wurst | Wurscht
+W | D'Sahara isch e …? | Wüste | Wüeschti
+W | Getränk us Trübel? | Wein | Wii
+W | Sibe Täg? | Woche | Wuche
+W | Hät sechs Siite mit Pünkt? | Würfel
+W | Weckt di am Morge? | Wecker
+W | Gääl-schwarzes Insekt, wo zum Ässe chunt und sticht? | Wespe
+W | Fescht am 24. und 25. Dezember? | Weihnachten | Wiehnachte
+W | Flinke chliine Marder, im Winter wiiss? | Wiesel | Hermelin
+W | Mit dere misst mer s'Gwicht? | Waage
+W | Getreide fürs Mehl? | Weizen | Weize
+W | Mit Rucksack über de Bärg laufe? | Wandern | Wanderung; wandere
+W | Vorname vom Tell? | Wilhelm
+W | Läbt im Bode, und de Vogel frisst ihn? | Wurm | Regenwurm
+W | Underirdische Teil vo de Pflanze? | Wurzel | Wurzle
+
+Z | Gröschti Stadt vo de Schwiiz? | Zürich | Züri
+Z | Kanton mit de berüehmte Chriesitorte? | Zug
+Z | Ort am Fuess vom Matterhorn? | Zermatt
+Z | Gstreifts Pferd? | Zebra
+Z | Det drin chasch Karies ha? | Zahn | Zand; Zähne
+Z | Gääli, suuri Frucht? | Zitrone
+Z | Bringt eim bim Schniide zum Briegge? | Zwiebel | Zibele; Zwieble
+Z | Macht de Kafi süess? | Zucker
+Z | Det schlaft mer bim Campe? | Zelt | Zält
+Z | Mit Clowns und Akrobate? | Zirkus
+Z | S'Schneewittli hät sibe …? | Zwerge | Zwerg
+Z | Mäckeret und git Milch für Chäs? | Ziege | Geiss
+Z | Zahl nach nüün? | Zehn | Zäh
+Z | Sunntigsbrot, gflochte? | Zopf | Züpfe
+Z | Det lisisch d'Nachrichte am Morge? | Zeitung | Ziitig
+Z | Ruum i de Wohnig? | Zimmer
+Z | Mit dere putzt mer d'Zäh? | Zahnbürste | Zahnbürschte
+Z | Det gseht mer Tier us aller Wält? | Zoo
+Z | Macht Zaubertrick? | Zauberer | Zauberin
+Z | Insle im Mittelmeer mit de Hauptstadt Nikosia? | Zypern
+Z | Füf a jedem Fuess? | Zehen | Zeh; Zeche; Zehe
+Z | Gwürz für Milchreis und Glüehwii? | Zimt
+Z | Bohrt i de Zäh? | Zahnarzt | Zahnärztin
+Z | Grüens, längs Gmües, Schwiizer Wort? | Zucchetti | Zucchini
+Z | Zürcher Reformator? | Zwingli
+Z | Grenzt de Garte ab? | Zaun | Haag

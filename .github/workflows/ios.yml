@@ -1,0 +1,32 @@
+name: iOS
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fragen-Datenbank prüfen
+        run: python3 tools/validate_questions.py
+
+      - name: Xcode-Version
+        run: xcodebuild -version
+
+      - name: Core-Logik testen (swift test)
+        run: swift test
+
+      - name: App für den iOS-Simulator bauen
+        run: |
+          xcodebuild \
+            -project ABCSpiel.xcodeproj \
+            -scheme ABCSpiel \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build | tee build.log | grep -E "error:|warning:|BUILD" || true
+          grep -q "BUILD SUCCEEDED" build.log
