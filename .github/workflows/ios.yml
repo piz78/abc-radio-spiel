@@ -33,9 +33,9 @@ jobs:
           "$RUNNER_TEMP/venv/bin/python" tools/voice/generate_clips.py --engine dummy \
             --manifest "$RUNNER_TEMP/clips.json" --ausgabe "$RUNNER_TEMP/clips" --nur-fragen --buchstabe A --limit 8
           "$RUNNER_TEMP/venv/bin/python" tools/voice/generate_clips.py --engine say \
-            --manifest "$RUNNER_TEMP/clips.json" --ausgabe "$RUNNER_TEMP/clips" --keys q-b-bern,greeting-2 || true
+            --manifest "$RUNNER_TEMP/clips.json" --ausgabe "$RUNNER_TEMP/clips" --keys q-b-bern,greeting-2 --say-voice ""
           ls -la "$RUNNER_TEMP/clips"
-          test "$(ls "$RUNNER_TEMP/clips"/*.m4a | wc -l)" -ge 8
+          test "$(ls "$RUNNER_TEMP/clips"/*.m4a | wc -l)" -ge 10
           afinfo "$RUNNER_TEMP/clips/q-a-aare.m4a" | grep -E "duration|Data format"
 
       - name: App für den iOS-Simulator bauen

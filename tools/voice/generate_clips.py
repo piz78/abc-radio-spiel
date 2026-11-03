@@ -252,10 +252,11 @@ class SayEngine:
 
     def synth(self, text: str):
         with tempfile.TemporaryDirectory() as tmp:
-            aiff = Path(tmp) / "say.aiff"
-            subprocess.run(["say", "-v", self.voice, "-o", str(aiff), f"--data-format=LEI16@{WORK_SR}", text],
-                           check=True)
-            audio, sr = read_audio(aiff)
+            wav = Path(tmp) / "say.wav"
+            voice = ["-v", self.voice] if self.voice else []
+            subprocess.run(["say", *voice, "-o", str(wav), "--file-format=WAVE",
+                            f"--data-format=LEI16@{WORK_SR}", text], check=True)
+            audio, sr = read_audio(wav)
             return resample(audio, sr, self.sr)
 
 
@@ -366,7 +367,7 @@ def main() -> int:
     parser.add_argument("--exaggeration", type=float, default=0.5, help="Chatterbox: Ausdruck (0.25–1.0)")
     parser.add_argument("--cfg-weight", type=float, default=0.5, help="Chatterbox: Tempo/Treue (0.2–0.8)")
     parser.add_argument("--temperature", type=float, default=0.8, help="Chatterbox: Variation")
-    parser.add_argument("--say-voice", default="Anna", help="Stimme für --engine say")
+    parser.add_argument("--say-voice", default="Anna", help="Stimme für --engine say (leer = Systemstimme)")
     args = parser.parse_args()
 
     manifest = load_manifest(args.manifest)
