@@ -71,4 +71,4 @@ python3 tools/validate_questions.py
 swift test
 ```
 
-Siehe auch [PLAN.md](PLAN.md) für das Konzept.
+Siehe auch [PLAN.md](PLAN.md) für das Konzept und [docs/KONZEPT-INHALTE-SERVER.md](docs/KONZEPT-INHALTE-SERVER.md) für Fragen und Clips vom Webserver.
