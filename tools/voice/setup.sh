@@ -19,7 +19,8 @@ case "$ENGINE" in
     uv pip install --python "$VENV/bin/python" chatterbox-tts soundfile numpy "setuptools<81"
     ;;
   xtts)
-    uv pip install --python "$VENV/bin/python" coqui-tts torch torchaudio soundfile numpy
+    # PyTorch < 2.9: ab 2.9 verlangt coqui-tts zusätzlich torchcodec + FFmpeg-Bibliotheken.
+    uv pip install --python "$VENV/bin/python" coqui-tts "torch<2.9" "torchaudio<2.9" soundfile numpy
     ;;
   *)
     echo "Unbekanntes Modell: $ENGINE (chatterbox oder xtts)"
