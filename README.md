@@ -29,7 +29,7 @@ Fan-Projekt, nicht offiziell.
 1. Mac mit **Xcode 16** oder neuer.
 2. `ABCSpiel.xcodeproj` öffnen.
 3. Unter *Signing & Capabilities* dein Team wählen und ggf. die Bundle-ID
-   (`com.example.ABCSpiel`) anpassen.
+   (`com.martinweber.ABCRadioSpiel`) anpassen.
 4. iPhone oder Simulator wählen → ▶︎ Run.
 
 Mindestversion: iOS 17.
