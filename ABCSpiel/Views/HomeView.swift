@@ -104,7 +104,7 @@ struct HomeView: View {
         DisclosureGroup(isExpanded: $showRules) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Du ziehsch e Charte mit eme Buechstabe.")
-                Text("• De Moderator stellt dir Frag um Frag – all Antworte fanged mit dem Buechstabe aa.")
+                Text("• D'Moderatorin stellt dir Frag um Frag – all Antworte fanged mit dem Buechstabe aa.")
                 Text("• Du hesch \(app.settings.roundSeconds) Sekunde Ziit.")
                 Text("• Weisch öppis nid, säg «wiiter» oder drück «Wiiter».")
                 Text("• Mit \(app.settings.targetScore) richtige Antworte hesch gwunne!")

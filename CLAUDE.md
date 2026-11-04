@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-SwiftUI iOS app (iOS 17+, Xcode 16+) that recreates the feel of a Swiss radio quiz at home: one letter, 45 seconds, at least twelve correct answers. A moderator named "Ruedi" speaks every line. Docs, code comments and commit messages are in German; everything the player sees or hears is Swiss German (Mundart), including questions, moderator lines, UI labels and error messages. Keep that split.
+SwiftUI iOS app (iOS 17+, Xcode 16+) that recreates the feel of a Swiss radio quiz at home: one letter, 45 seconds, at least twelve correct answers. A female moderator named "Vreni" speaks every line. Docs, code comments and commit messages are in German; everything the player sees or hears is Swiss German (Mundart), including questions, moderator lines, UI labels and error messages. Keep that split.
 
 ## Commands
 

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// «Eigeni Stimm»: Moderator-Sätze, Zahlen-Bausteine und Fragen selber aufnehmen,
+/// «Eigeni Stimm»: Moderatorinnen-Sätze, Zahlen-Bausteine und Fragen selber aufnehmen,
 /// Aufnahmen an den Mac schicken (für den Stimm-Klon) und Status der Clips sehen.
 struct VoiceStudioView: View {
     @Environment(AppModel.self) private var app
@@ -45,11 +45,11 @@ struct VoiceStudioView: View {
                 LabeledContent("Eigeni Ufnahme", value: "\(recordingCount)")
                 LabeledContent("Generierti Clips i de App", value: "\(app.clips.bundledCount)")
             } footer: {
-                Text("Wo's e Ufnahm git, redt de Moderator mit dinere Stimm. Suscht list d'iOS-Stimm vor. Eigeni Ufnahme gönd vor generierte Clips.")
+                Text("Wo's e Ufnahm git, redt d'Moderatorin mit dinere Stimm. Suscht list d'iOS-Stimm vor. Eigeni Ufnahme gönd vor generierte Clips.")
             }
 
             Section {
-                Label("Sprich d'Moderator-Sätz und d'Zahle sälber ii. Sätz mit Zahle setzt d'App us Baustei zäme – wie d'Aasage a de SBB.", systemImage: "1.circle")
+                Label("Sprich d'Moderatorinne-Sätz und d'Zahle sälber ii. Sätz mit Zahle setzt d'App us Baustei zäme – wie d'Aasage a de SBB.", systemImage: "1.circle")
                 Label("Sprich d'Frage am Stück ii (unde). Frage ohni Ufnahm list d'iOS-Stimm vor – du chasch also nach und nach ufneh.", systemImage: "2.circle")
                 Label("Optional: Referenz-Sätz ufneh, per AirDrop an de Mac schicke und d'restliche Frage mit «tools/voice» generiere.", systemImage: "3.circle")
             } header: {
@@ -58,13 +58,13 @@ struct VoiceStudioView: View {
             .font(.subheadline)
 
             if let recorder {
-                Section("Moderator") {
+                Section("Moderatorin") {
                     let moderatorClips = moderatorGroups.flatMap(\.1).filter { !$0.key.hasPrefix("ref-") }
                     NavigationLink {
-                        RecordingSessionView(title: "Moderator ufneh", clips: moderatorClips, recorder: recorder,
+                        RecordingSessionView(title: "Moderatorin ufneh", clips: moderatorClips, recorder: recorder,
                                              hint: "Bi Sätz mit «…» und bi de Zahle d'Stimm obe laa – die werde zämegsetzt.")
                     } label: {
-                        sessionLabel("Alli Moderator-Sätz am Stück", clips: moderatorClips)
+                        sessionLabel("Alli Moderatorinne-Sätz am Stück", clips: moderatorClips)
                     }
                     Button {
                         // Zämegsetzti Sätz probehöre: Regle mit Ziit/Ziel und es Resultat.

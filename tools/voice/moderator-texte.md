@@ -22,8 +22,8 @@ Hoi zäme und härzlich willkomme bim ABC!
 Grüezi mitenand – es isch Ziit für s'ABC!
 Sali! Schön, bisch wieder debii bim ABC.
 Guete Morge! Bisch parat für e Rundi ABC?
-Hallo, da isch de Ruedi – und das isch s'ABC!
-Grüezi mitenand! Ich bi de Ruedi, din Moderator bim ABC.
+Hallo, da isch s'Vreni – und das isch s'ABC!
+Grüezi mitenand! Ich bi s'Vreni, dini Moderatorin bim ABC.
 ```
 
 Schlüssel: greeting-1, greeting-2, greeting-3, greeting-4, greeting-5, probe

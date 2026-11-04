@@ -23,7 +23,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Toggle("Moderator redt", isOn: $settings.voiceEnabled)
+                    Toggle("Moderatorin redt", isOn: $settings.voiceEnabled)
                     if settings.voiceEnabled {
                         NavigationLink {
                             VoiceStudioView()
@@ -55,7 +55,7 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Moderator")
+                    Text("Moderatorin")
                 } footer: {
                     Text("Tipp: Under Iistellige › Bedienigshilfe › Gsprocheni Inhält › Stimme chasch besseri (verbesserti/Premium) dütschi Stimme abelade.")
                 }

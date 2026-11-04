@@ -9,8 +9,8 @@ Fan-Projekt, nicht offiziell.
 - 🃏 **Generierte Karten** – 1161 Fragen in Mundart für 23 Buchstaben; jede Runde zieht eine
   neue Karte (zuletzt gespielte Buchstaben werden vermieden, Fragen werden gemischt).
 - ⏱️ **Timer** – 45 s (einstellbar), Ring-Anzeige, Ticken in den letzten 5 Sekunden, Buzzer.
-- 🎙️ **Moderator «Ruedi»** – begrüsst, zieht den Buchstaben («B wie Bümpliz!»), zählt
-  «Achtung … fertig … los!», stellt die Fragen und gibt am Schluss sein Urteil ab – auf
+- 🎙️ **Moderatorin «Vreni»** – begrüsst, zieht den Buchstaben («B wie Bümpliz!»), zählt
+  «Achtung … fertig … los!», stellt die Fragen und gibt am Schluss ihr Urteil ab – auf
   Schweizerdeutsch, per Sprachausgabe.
 - ✅ **Antworten** – per Knopf («Richtig» / «Wiiter») oder optional per **Spracherkennung**:
   die App hört zu, erkennt die richtige Antwort (unscharfer Vergleich) und «wiiter» zum Passen.
@@ -18,7 +18,7 @@ Fan-Projekt, nicht offiziell.
   Rekord, Siege, Durchschnitt.
 - 👥 **Mit Fründe spiele** – du moderierst, die Lösungen werden dir angezeigt.
 - 🗂️ **Chartestapel** – Karten für jeden Buchstaben generieren, anschauen und teilen.
-- 🗣️ **Eigene Stimme** – Moderator-Sätze und Fragen in der App selber einsprechen, ganz ohne KI:
+- 🗣️ **Eigene Stimme** – Moderatorinnen-Sätze und Fragen in der App selber einsprechen, ganz ohne KI:
   Sätze mit Zahlen («Du hesch 45 Sekunde», «12 Pünkt») werden wie die SBB-Ansagen aus Bausteinen
   zusammengesetzt, die Fragen nimmst du am Stück auf (Teleprompter, springt automatisch weiter).
   Was fehlt, liest die iOS-Stimme. Optional erzeugt ein lokales KI-Modell auf dem Mac die
@@ -39,7 +39,7 @@ Mindestversion: iOS 17.
 iOS hat keine echte Schweizerdeutsch-Stimme; die App nimmt eine Schweizer (de-CH) Stimme,
 falls vorhanden, sonst eine deutsche. Viel besser klingen die *verbesserten/Premium*-Stimmen:
 iPhone-Einstellungen › Bedienungshilfen › Gesprochene Inhalte › Stimmen › Deutsch.
-In der App unter *Iistellige › Moderator* auswählen.
+In der App unter *Iistellige › Moderatorin* auswählen.
 
 ## Projektstruktur
 

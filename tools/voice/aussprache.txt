@@ -6,6 +6,9 @@
 s'ABC = s A Be Ze
 ABC-Legände = A Be Ze Legände
 ABC = A Be Ze
+Família = Familia
+Galápagos = Galapagos
+Bogotá = Bogota
 # Beispiele – bei Bedarf aktivieren (das # entfernen) und mit --keys … --neu testen:
 # Chäs = Chääs
 # Buechstabe = Bu-ech-stabe

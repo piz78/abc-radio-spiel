@@ -12,7 +12,7 @@ Wer nicht weiss, sagt «wiiter» (passen).
    25 gemischte Fragen.
 2. **Timer** – 45 s (einstellbar 30/45/60/90), Ring-Anzeige, Ticken in den letzten 5 Sekunden,
    Buzzer am Schluss.
-3. **Moderator «Ruedi»** – spricht Begrüssung, Buchstaben, Countdown («Achtung, fertig, los!»),
+3. **Moderatorin «Vreni»** – spricht Begrüssung, Buchstaben, Countdown («Achtung, fertig, los!»),
    die Fragen und das Schlussurteil. Texte in **Schweizerdeutsch**, Sprachausgabe via
    `AVSpeechSynthesizer` (Schweizer Stimme falls vorhanden, sonst Deutsch; wählbar).
 4. **Antworten**

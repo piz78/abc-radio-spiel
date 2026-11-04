@@ -48,9 +48,9 @@ enum GameOptions {
     static let scoreRange = 0...30
 }
 
-/// Alles, was der Moderator «Ruedi» sagt – in Schweizerdeutsch.
+/// Alles, was die Moderatorin «Vreni» sagt – in Schweizerdeutsch.
 enum ModeratorScript {
-    static let moderatorName = "Ruedi"
+    static let moderatorName = "Vreni"
 
     enum Group {
         static let greeting = "Begrüessig"
@@ -97,7 +97,7 @@ enum ModeratorScript {
         "Grüezi mitenand – es isch Ziit für s'ABC!",
         "Sali! Schön, bisch wieder debii bim ABC.",
         "Guete Morge! Bisch parat für e Rundi ABC?",
-        "Hallo, da isch de \(moderatorName) – und das isch s'ABC!",
+        "Hallo, da isch s'\(moderatorName) – und das isch s'ABC!",
     ], prefix: "greeting", group: Group.greeting)
 
     static var greetings: [ModeratorLine] {
@@ -106,7 +106,7 @@ enum ModeratorScript {
 
     static let probeClip = Clip(
         key: "probe",
-        text: "Grüezi mitenand! Ich bi de \(moderatorName), din Moderator bim ABC.",
+        text: "Grüezi mitenand! Ich bi s'\(moderatorName), dini Moderatorin bim ABC.",
         group: Group.greeting
     )
 
@@ -269,7 +269,7 @@ enum ModeratorScript {
     // MARK: - Referenz-Sätze für den Stimm-Klon (werden im Spiel nicht abgespielt)
 
     static let referenceClips = clips([
-        "Hoi zäme! Ich bi de Moderator vom ABC. Jede Morge stell ich mine Gäscht Frage, und all Antworte fanged mit em gliiche Buechstabe aa.",
+        "Hoi zäme! Ich bi d'Moderatorin vom ABC. Jede Morge stell ich mine Gäscht Frage, und all Antworte fanged mit em gliiche Buechstabe aa.",
         "Wer zwölf Frage richtig beantwortet, hät gwunne. Das tönt eifach, aber mit em Timer im Nacke wird's grad chli hektisch!",
         "Hauptstadt vo Frankriich? Paris! Gröschte Kanton vo de Schwiiz? Graubünde! Super, wiiter so – no zwänzg Sekunde.",
     ], prefix: "ref", group: Group.reference)
