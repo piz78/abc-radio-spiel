@@ -98,8 +98,11 @@ final class ModeratorVoice: NSObject, AVSpeechSynthesizerDelegate, AVAudioPlayer
     private func perform(_ line: ModeratorLine, generation myGeneration: Int) async {
         for clip in line.clips {
             guard generation == myGeneration, !Task.isCancelled else { return }
-            if let url = clips?.url(for: clip.key) {
-                await play(url)
+            if let urls = clips?.playlist(for: clip) {
+                for url in urls {
+                    guard generation == myGeneration, !Task.isCancelled else { return }
+                    await play(url)
+                }
             } else {
                 await utter(clip.text)
             }

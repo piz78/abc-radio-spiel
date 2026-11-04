@@ -232,9 +232,34 @@ final class ClipCatalogTests: XCTestCase {
         lines += bank.questions.map(ModeratorScript.questionLine)
         for line in lines {
             for clip in line.clips {
-                XCTAssertTrue(keys.contains(clip.key), "Clip fehlt im Katalog: \(clip.key)")
+                if let blocks = clip.blocks {
+                    // Satz aus Bausteinen: jeder Baustein muss aufnehmbar sein.
+                    for block in blocks {
+                        XCTAssertTrue(keys.contains(block.key), "Baustein fehlt im Katalog: \(block.key) (\(clip.key))")
+                    }
+                } else {
+                    XCTAssertTrue(keys.contains(clip.key), "Clip fehlt im Katalog: \(clip.key)")
+                }
             }
         }
+    }
+
+    func testNumberSentencesHaveBlocks() {
+        // Alle Zahlen, die im Spiel vorkommen, lassen sich aus Bausteinen zusammensetzen.
+        for seconds in GameOptions.roundSecondsChoices {
+            let clip = ModeratorScript.rulesSecondsClip(seconds)
+            XCTAssertEqual(clip.blocks?.map(\.key), ["rules-seconds-pre", "zahl-\(seconds)", "rules-seconds-post"])
+        }
+        for target in GameOptions.targetRange {
+            XCTAssertEqual(ModeratorScript.rulesTargetClip(target).blocks?.count, 3)
+        }
+        for score in GameOptions.scoreRange {
+            XCTAssertNotNil(ModeratorScript.scoreClip(score).blocks, "Kein Baustein für \(score) Pünkt")
+        }
+        XCTAssertEqual(ModeratorScript.scoreClip(1).blocks?.map(\.key), ["score-one"])
+        XCTAssertEqual(ModeratorScript.scoreClip(12).blocks?.map(\.text), ["zwölf", "… Pünkt."])
+        // Ausserhalb der Bausteine: nur Sprachausgabe für den ganzen Satz.
+        XCTAssertNil(ModeratorScript.scoreClip(77).blocks)
     }
 
     func testManifestJSON() throws {
@@ -243,5 +268,7 @@ final class ClipCatalogTests: XCTestCase {
         XCTAssertTrue(decoded.contains { $0.key == "q-b-bern" && $0.text == "Hauptstadt?" })
         XCTAssertTrue(decoded.contains { $0.key == "letter-b" })
         XCTAssertTrue(decoded.contains { $0.key.hasPrefix("ref-") })
+        XCTAssertTrue(decoded.contains { $0.key == "zahl-45" && $0.text == "föifevierzg" })
+        XCTAssertFalse(decoded.contains { $0.key == "score-12" }, "Ganze Zahlen-Sätze werden nicht mehr aufgenommen")
     }
 }

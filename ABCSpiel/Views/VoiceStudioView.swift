@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// «Eigeni Stimm»: Moderator-Sätze und Fragen selber aufnehmen,
+/// «Eigeni Stimm»: Moderator-Sätze, Zahlen-Bausteine und Fragen selber aufnehmen,
 /// Aufnahmen an den Mac schicken (für den Stimm-Klon) und Status der Clips sehen.
 struct VoiceStudioView: View {
     @Environment(AppModel.self) private var app
@@ -19,6 +19,23 @@ struct VoiceStudioView: View {
         return order.map { ($0, grouped[$0] ?? []) }
     }
 
+    private var questionClips: [Clip] { ClipCatalog.questionClips(app.bank) }
+
+    /// Tipps zur Betonung für Gruppen mit Bausteinen (wie bei den SBB-Ansagen).
+    static func hint(for group: String) -> String? {
+        typealias G = ModeratorScript.Group
+        switch group {
+        case G.numbers:
+            return "Säg jedi Zahl wie mitts im Satz – d'Stimm obe laa, nid abesänke. Si wird zwüsche «Du hesch …» und «… Sekunde.» igsetzt."
+        case G.rules:
+            return "Sätz mit «…» sind Baustei: det chunnt e Zahl dezwüsche. Vor de Zahl d'Stimm obe laa, nach de Zahl normal fertig rede."
+        case G.score:
+            return "«… Pünkt.» chunnt grad nach ere Zahl – also ohni Pause aafange und am Schluss d'Stimm abesänke."
+        default:
+            return nil
+        }
+    }
+
     var body: some View {
         @Bindable var settings = app.settings
         List {
@@ -31,26 +48,52 @@ struct VoiceStudioView: View {
                 Text("Wo's e Ufnahm git, redt de Moderator mit dinere Stimm. Suscht list d'iOS-Stimm vor. Eigeni Ufnahme gönd vor generierte Clips.")
             }
 
-            Section("So gahts") {
-                Label("Sprich d'Moderator-Sätz und d'Referenz-Sätz sälber ii.", systemImage: "1.circle")
-                Label("Schick d'Ufnahme per AirDrop an din Mac (unde).", systemImage: "2.circle")
-                Label("Uf em Mac erzüügt «tools/voice» mit eme lokale Modell alli Frage i dinere Stimm.", systemImage: "3.circle")
-                Label("App nöi baue – fertig!", systemImage: "4.circle")
+            Section {
+                Label("Sprich d'Moderator-Sätz und d'Zahle sälber ii. Sätz mit Zahle setzt d'App us Baustei zäme – wie d'Aasage a de SBB.", systemImage: "1.circle")
+                Label("Sprich d'Frage am Stück ii (unde). Frage ohni Ufnahm list d'iOS-Stimm vor – du chasch also nach und nach ufneh.", systemImage: "2.circle")
+                Label("Optional: Referenz-Sätz ufneh, per AirDrop an de Mac schicke und d'restliche Frage mit «tools/voice» generiere.", systemImage: "3.circle")
+            } header: {
+                Text("So gahts")
             }
             .font(.subheadline)
 
             if let recorder {
                 Section("Moderator") {
+                    let moderatorClips = moderatorGroups.flatMap(\.1).filter { !$0.key.hasPrefix("ref-") }
+                    NavigationLink {
+                        RecordingSessionView(title: "Moderator ufneh", clips: moderatorClips, recorder: recorder,
+                                             hint: "Bi Sätz mit «…» und bi de Zahle d'Stimm obe laa – die werde zämegsetzt.")
+                    } label: {
+                        sessionLabel("Alli Moderator-Sätz am Stück", clips: moderatorClips)
+                    }
+                    Button {
+                        // Zämegsetzti Sätz probehöre: Regle mit Ziit/Ziel und es Resultat.
+                        recorder.tearDown()
+                        app.applySettings()
+                        let rules = ModeratorScript.rules(seconds: app.settings.roundSeconds, target: app.settings.targetScore)
+                        let score = Int.random(in: 0...max(1, app.settings.targetScore + 3))
+                        let verdict = ModeratorScript.verdict(score: score, target: app.settings.targetScore)
+                        app.voice.speak(ModeratorLine(display: rules.display + " " + verdict.display,
+                                                      clips: rules.clips + verdict.clips))
+                    } label: {
+                        Label("Zämegsetzti Sätz probehöre", systemImage: "play.circle")
+                    }
                     ForEach(moderatorGroups, id: \.0) { group, clips in
                         NavigationLink {
-                            ClipListView(title: group, clips: clips, recorder: recorder)
+                            ClipListView(title: group, clips: clips, recorder: recorder, hint: Self.hint(for: group))
                         } label: {
                             groupLabel(group, clips: clips)
                         }
                     }
                 }
 
-                Section("Frage") {
+                Section {
+                    NavigationLink {
+                        RecordingSessionView(title: "Frage ufneh", clips: questionClips, recorder: recorder,
+                                             hint: "Ruhig und dütlich, wie im Radio. Nach em Stopp gahts grad zur nächschte Frag.")
+                    } label: {
+                        sessionLabel("Alli Frage am Stück", clips: questionClips)
+                    }
                     ForEach(app.bank.letters, id: \.self) { letter in
                         let clips = app.bank.questions(for: letter).map(\.clip)
                         NavigationLink {
@@ -59,6 +102,10 @@ struct VoiceStudioView: View {
                             groupLabel("Buechstabe \(letter)", clips: clips)
                         }
                     }
+                } header: {
+                    Text("Frage")
+                } footer: {
+                    Text("Jedi Frag als ganze Satz – das tönt am natürlichschte. Rund 580 churzi Sätz sind öppe 30–45 Minute Rede, verteilt uf es paar Abig.")
                 }
 
                 Section {
@@ -97,6 +144,21 @@ struct VoiceStudioView: View {
         return app.clips.allRecordings().count
     }
 
+    private func sessionLabel(_ title: String, clips: [Clip]) -> some View {
+        _ = recorder?.revision
+        let own = clips.filter { app.clips.hasRecording($0.key) }.count
+        return VStack(alignment: .leading, spacing: 6) {
+            Label(title, systemImage: "record.circle")
+                .font(.subheadline.weight(.semibold))
+            ProgressView(value: Double(own), total: Double(max(clips.count, 1)))
+                .tint(.green)
+            Text("\(own) vo \(clips.count) mit eigener Ufnahm")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 4)
+    }
+
     private func groupLabel(_ title: String, clips: [Clip]) -> some View {
         _ = recorder?.revision
         let own = clips.filter { app.clips.hasRecording($0.key) }.count
@@ -122,6 +184,7 @@ struct ClipListView: View {
     let title: String
     let clips: [Clip]
     let recorder: VoiceRecorder
+    var hint: String?
     @Environment(AppModel.self) private var app
 
     var body: some View {
@@ -136,11 +199,23 @@ struct ClipListView: View {
                         }
                 }
             } footer: {
-                Text("Tipp uf 🎙️ zum Ufneh, nomal tippe zum Stoppe. Ruhig und dütlich rede, wie im Radio.")
+                VStack(alignment: .leading, spacing: 6) {
+                    if let hint { Text(hint) }
+                    Text("Tipp uf 🎙️ zum Ufneh, nomal tippe zum Stoppe. Ruhig und dütlich rede, wie im Radio.")
+                }
             }
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    RecordingSessionView(title: title, clips: clips, recorder: recorder, hint: hint)
+                } label: {
+                    Label("Am Stück", systemImage: "record.circle")
+                }
+            }
+        }
         .onAppear { recorder.prepareSession() }
         .onDisappear {
             recorder.tearDown()

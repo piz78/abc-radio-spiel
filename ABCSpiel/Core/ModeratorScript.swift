@@ -2,10 +2,23 @@ import Foundation
 
 /// Ein Sprech-Baustein mit festem Schlüssel. Zu jedem Schlüssel kann es eine Audiodatei geben
 /// (eigene Aufnahme oder mit dem Stimm-Klon generiert); sonst liest die iOS-Stimme `text`.
+///
+/// Ein Clip kann zusätzlich aus **Bausteinen** bestehen (wie die SBB-Ansagen): z.B.
+/// «Du hesch» + «föifevierzg» + «Sekunde.». Gibt es keine Aufnahme für den ganzen Satz,
+/// aber für alle Bausteine, werden diese nacheinander abgespielt.
 struct Clip: Hashable, Codable, Sendable {
     let key: String
     let text: String
     let group: String
+    /// Bausteine, aus denen der Satz zusammengesetzt werden kann (leer = keine).
+    let blocks: [Clip]?
+
+    init(key: String, text: String, group: String, blocks: [Clip]? = nil) {
+        self.key = key
+        self.text = text
+        self.group = group
+        self.blocks = blocks
+    }
 }
 
 /// Ein Satz des Moderators: Anzeigetext und die Clips, die nacheinander gesprochen werden.
@@ -48,6 +61,7 @@ enum ModeratorScript {
         static let end = "Schluss"
         static let verdict = "Urteil"
         static let score = "Pünkt"
+        static let numbers = "Zahle"
         static let reference = "Referenz für de Stimm-Klon"
         static func questions(_ letter: String) -> String { "Frage \(letter)" }
     }
@@ -111,11 +125,19 @@ enum ModeratorScript {
         text: "Wenn d'öppis nid weisch, säg eifach «wiiter».",
         group: Group.rules
     )
+    static let rulesSecondsPreClip = Clip(key: "rules-seconds-pre", text: "Du hesch …", group: Group.rules)
+    static let rulesSecondsPostClip = Clip(key: "rules-seconds-post", text: "… Sekunde.", group: Group.rules)
+    static let rulesTargetPreClip = Clip(key: "rules-target-pre", text: "Mit …", group: Group.rules)
+    static let rulesTargetPostClip = Clip(key: "rules-target-post", text: "… richtige Antworte hesch gwunne.", group: Group.rules)
+
+    /// «Du hesch 45 Sekunde.» – ganzer Satz oder aus Bausteinen.
     static func rulesSecondsClip(_ seconds: Int) -> Clip {
-        Clip(key: "rules-seconds-\(seconds)", text: "Du hesch \(seconds) Sekunde.", group: Group.rules)
+        Clip(key: "rules-seconds-\(seconds)", text: "Du hesch \(seconds) Sekunde.", group: Group.rules,
+             blocks: numberClip(seconds).map { [rulesSecondsPreClip, $0, rulesSecondsPostClip] })
     }
     static func rulesTargetClip(_ target: Int) -> Clip {
-        Clip(key: "rules-target-\(target)", text: "Mit \(target) richtige Antworte hesch gwunne.", group: Group.rules)
+        Clip(key: "rules-target-\(target)", text: "Mit \(target) richtige Antworte hesch gwunne.", group: Group.rules,
+             blocks: numberClip(target).map { [rulesTargetPreClip, $0, rulesTargetPostClip] })
     }
 
     static func rules(seconds: Int, target: Int) -> ModeratorLine {
@@ -168,8 +190,34 @@ enum ModeratorScript {
     static let outOfQuestionsClip = Clip(key: "outofquestions", text: "Wow – mir sind d'Frage usgange!", group: Group.end)
     static var outOfQuestions: ModeratorLine { ModeratorLine(display: outOfQuestionsClip.text, clips: [outOfQuestionsClip]) }
 
+    static let scoreOneClip = Clip(key: "score-one", text: "Ein Punkt.", group: Group.score)
+    static let scorePointsClip = Clip(key: "score-points", text: "… Pünkt.", group: Group.score)
+
+    /// «12 Pünkt.» – ganzer Satz oder aus Bausteinen («zwölf» + «Pünkt.»).
     static func scoreClip(_ score: Int) -> Clip {
-        Clip(key: "score-\(score)", text: score == 1 ? "1 Punkt." : "\(score) Pünkt.", group: Group.score)
+        let blocks: [Clip]? = score == 1 ? [scoreOneClip] : numberClip(score).map { [$0, scorePointsClip] }
+        return Clip(key: "score-\(score)", text: score == 1 ? "1 Punkt." : "\(score) Pünkt.",
+                    group: Group.score, blocks: blocks)
+    }
+
+    // MARK: - Zahle (Bausteine)
+
+    /// Zahlen in Mundart – so, wie sie mitten im Satz gesprochen werden.
+    static let numberWords: [Int: String] = [
+        0: "null", 1: "eis", 2: "zwei", 3: "drü", 4: "vier", 5: "föif", 6: "sächs", 7: "sibe",
+        8: "acht", 9: "nüün", 10: "zäh", 11: "elf", 12: "zwölf", 13: "drizäh", 14: "vierzäh",
+        15: "füfzäh", 16: "sächzäh", 17: "sibzäh", 18: "achtzäh", 19: "nüünzäh", 20: "zwänzg",
+        21: "einezwänzg", 22: "zweiezwänzg", 23: "drüezwänzg", 24: "vierezwänzg", 25: "föifezwänzg",
+        26: "sächsezwänzg", 27: "sibenezwänzg", 28: "achtezwänzg", 29: "nüünezwänzg", 30: "drissg",
+        45: "föifevierzg", 60: "sächzg", 90: "nünzg",
+    ]
+
+    /// Alle Zahlen, für die es Bausteine gibt (aufsteigend).
+    static var numbers: [Int] { numberWords.keys.sorted() }
+
+    /// Baustein für eine Zahl – oder `nil`, wenn es dafür keinen gibt.
+    static func numberClip(_ n: Int) -> Clip? {
+        numberWords[n].map { Clip(key: "zahl-\(n)", text: $0, group: Group.numbers) }
     }
 
     enum VerdictBand: String, CaseIterable {

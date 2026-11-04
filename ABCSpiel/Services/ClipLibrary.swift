@@ -41,6 +41,21 @@ final class ClipLibrary {
         return bundledURL(for: key)
     }
 
+    /// Was für einen Clip abgespielt wird – oder `nil` (dann liest die iOS-Stimme den ganzen Satz).
+    ///
+    /// Reihenfolge: eigene Aufnahme des ganzen Satzes → alle Bausteine vorhanden (SBB-Prinzip)
+    /// → generierter Clip des ganzen Satzes. Fehlt auch nur ein Baustein, wird nicht gemischt,
+    /// sondern der ganze Satz von der iOS-Stimme gelesen.
+    func playlist(for clip: Clip) -> [URL]? {
+        guard isEnabled, !clip.key.isEmpty else { return nil }
+        if hasRecording(clip.key) { return [recordingURL(for: clip.key)] }
+        if let blocks = clip.blocks, !blocks.isEmpty {
+            let urls = blocks.compactMap { url(for: $0.key) }
+            if urls.count == blocks.count { return urls }
+        }
+        return bundledURL(for: clip.key).map { [$0] }
+    }
+
     func deleteRecording(_ key: String) {
         try? FileManager.default.removeItem(at: recordingURL(for: key))
     }

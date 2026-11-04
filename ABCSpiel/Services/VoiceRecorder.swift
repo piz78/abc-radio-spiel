@@ -62,11 +62,14 @@ final class VoiceRecorder: NSObject, AVAudioPlayerDelegate {
         }
     }
 
-    func stopRecording() {
+    /// Stoppt die Aufnahme und speichert sie (Stille am Anfang/Ende weggeschnitten).
+    /// Gibt `true` zurück, wenn eine Aufnahme gespeichert wurde.
+    @discardableResult
+    func stopRecording() -> Bool {
         meterTask?.cancel()
         meterTask = nil
         level = 0
-        guard let recorder, let key = recordingKey else { return }
+        guard let recorder, let key = recordingKey else { return false }
         let duration = recorder.currentTime
         recorder.stop()
         self.recorder = nil
@@ -74,12 +77,17 @@ final class VoiceRecorder: NSObject, AVAudioPlayerDelegate {
         // Sehr kurze Aufnahmen (versehentlich getippt) verwerfen.
         guard duration > 0.4 else {
             try? FileManager.default.removeItem(at: recorder.url)
-            return
+            return false
         }
         let target = library.recordingURL(for: key)
         try? FileManager.default.removeItem(at: target)
-        try? FileManager.default.moveItem(at: recorder.url, to: target)
+        if AudioTrimmer.trimSilence(source: recorder.url, destination: target) {
+            try? FileManager.default.removeItem(at: recorder.url)
+        } else {
+            try? FileManager.default.moveItem(at: recorder.url, to: target)
+        }
         revision += 1
+        return true
     }
 
     func play(_ key: String, url: URL) {

@@ -10,7 +10,7 @@ extension Question {
     var clip: Clip { Clip(key: clipKey, text: prompt, group: ModeratorScript.Group.questions(letter)) }
 }
 
-/// Liste aller Sprech-Clips – die gemeinsame Quelle für die App (Aufnahme-Studio)
+/// Liste aller Sprech-Clips (Bausteine statt ganzer Sätze mit Zahlen) – die gemeinsame Quelle für die App (Aufnahme-Studio)
 /// und das Mac-Skript `tools/voice/generate_clips.py` (via `swift run abc-clips`).
 public enum ClipCatalog {
     static func moderatorClips(letters: [String]) -> [Clip] {
@@ -19,8 +19,8 @@ public enum ClipCatalog {
         result += S.greetingClips
         result.append(S.probeClip)
         result.append(S.rulesIntroClip)
-        result += GameOptions.roundSecondsChoices.map(S.rulesSecondsClip)
-        result += GameOptions.targetRange.map(S.rulesTargetClip)
+        // Sätze mit Zahlen werden aus Bausteinen zusammengesetzt (SBB-Prinzip).
+        result += [S.rulesSecondsPreClip, S.rulesSecondsPostClip, S.rulesTargetPreClip, S.rulesTargetPostClip]
         result.append(S.rulesPassClip)
         result += S.announceClips
         result += letters.map(S.letterClip)
@@ -28,7 +28,8 @@ public enum ClipCatalog {
         result += S.timeUpClips
         result.append(S.outOfQuestionsClip)
         result += S.VerdictBand.allCases.flatMap(\.clips)
-        result += GameOptions.scoreRange.map(S.scoreClip)
+        result += [S.scorePointsClip, S.scoreOneClip]
+        result += S.numbers.compactMap(S.numberClip)
         return result
     }
 
