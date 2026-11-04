@@ -167,6 +167,50 @@ def load_lexicon() -> list[tuple[re.Pattern, str]]:
     return rules
 
 
+# ---------------------------------------------------------------- Zahlen in Mundart
+
+_UNITS = ["null", "eis", "zwei", "drü", "vier", "föif", "sächs", "sibe", "acht", "nüün",
+          "zäh", "elf", "zwölf", "drizäh", "vierzäh", "füfzäh", "sächzäh", "sibzäh", "achtzäh", "nüünzäh"]
+_TENS = {2: "zwänzg", 3: "drissg", 4: "vierzg", 5: "füfzg", 6: "sächzg", 7: "sibezg", 8: "achtzg", 9: "nünzg"}
+_COMPOUND = {1: "eine", 2: "zweie", 3: "drüe", 4: "viere", 5: "föife", 6: "sächse", 7: "sibene", 8: "achte", 9: "nüüne"}
+_ORDINAL_SPECIAL = {1: "erscht", 2: "zweit", 3: "dritt", 7: "sibet", 8: "acht"}
+
+
+def mundart_number(n: int) -> str:
+    """Grundzahl auf Zürichdeutsch, z.B. 45 → föifevierzg, 1476 → vierzähhundertsächsesibezg (Jahr)."""
+    if n < 20:
+        return _UNITS[n]
+    if n < 100:
+        tens, unit = divmod(n, 10)
+        return (_COMPOUND[unit] if unit else "") + _TENS[tens]
+    if 1100 <= n <= 1999:  # Jahreszahl: vierzähhundert…
+        hundreds, rest = divmod(n, 100)
+        return _UNITS[hundreds] + "hundert" + (mundart_number(rest) if rest else "")
+    if n < 1000:
+        hundreds, rest = divmod(n, 100)
+        return ("" if hundreds == 1 else _UNITS[hundreds]) + "hundert" + (mundart_number(rest) if rest else "")
+    if n < 1_000_000:
+        thousands, rest = divmod(n, 1000)
+        return ("" if thousands == 1 else mundart_number(thousands)) + "tuusig" + (mundart_number(rest) if rest else "")
+    return " ".join(_UNITS[int(d)] for d in str(n))
+
+
+def mundart_ordinal(n: int) -> str:
+    """Ordnungszahl, z.B. 1. → erschte, 24. → vierezwänzgschte."""
+    if n in _ORDINAL_SPECIAL:
+        return _ORDINAL_SPECIAL[n] + "e"
+    return mundart_number(n) + ("te" if n < 20 else "schte")
+
+
+def spell_numbers(text: str) -> str:
+    """Ersetzt Ziffern durch Mundart-Wörter (für Modelle, die keine Ziffern kennen)."""
+    text = re.sub(r"\b(\d{1,2})\.(?=\s+(?:und\s+\d|[A-ZÄÖÜa-zäöü]))",
+                  lambda m: mundart_ordinal(int(m.group(1))), text)
+    text = re.sub(r"(?<=[A-Za-z])(\d+)|(\d+)(?=[A-Za-z])",
+                  lambda m: f" {mundart_number(int(m.group(0)))} ", text)
+    return re.sub(r"\d+", lambda m: mundart_number(int(m.group(0))), text)
+
+
 def prepare_text(text: str, lexicon) -> str:
     for pattern, replacement in lexicon:
         text = pattern.sub(replacement, text)
@@ -271,6 +315,119 @@ class XTTSEngine:
         return np.asarray(out["wav"], dtype=np.float32)
 
 
+class SwissDialEngine:
+    """ESPnet-Modell swordi/SwissDial-TTS (VITS), trainiert auf dem SwissDial-Korpus der ETH Zürich:
+    8 Sprecher, je ein Dialekt. Spricht Mundart-Text in einem dieser Dialekte – klont aber NICHT deine Stimme."""
+
+    MODEL = "swordi/SwissDial-TTS"
+    # SwissDial-Dialektkürzel und Namen, unter denen man sie wählen kann
+    DIALECTS = {
+        "ag": ["aargau"], "be": ["bern", "bärn"], "bs": ["basel"], "gr": ["graubünden", "graubuenden", "chur"],
+        "lu": ["luzern", "luzärn"], "sg": ["stgallen", "st. gallen", "sanktgallen"], "vs": ["wallis", "valais"],
+        "zh": ["zürich", "zuerich", "züri"],
+    }
+
+    def __init__(self, references, args):
+        import torch
+        from espnet2.bin.tts_inference import Text2Speech
+        device = pick_device(args.device)
+        if device == "mps":
+            device = "cpu"  # ESPnet/VITS läuft auf MPS nicht zuverlässig; CPU ist für kurze Sätze schnell genug
+        if args.swissdial_dir:
+            root = Path(args.swissdial_dir)
+            train_config, model_file = self._files_from_meta(root)
+        else:
+            from espnet_model_zoo.downloader import ModelDownloader
+            log(f"Lade {self.MODEL} (beim ersten Mal ca. 300 MB Download) …")
+            files = ModelDownloader().download_and_unpack(self.MODEL)
+            train_config, model_file = Path(files["train_config"]), Path(files["model_file"])
+            root = next((p for p in train_config.parents if (p / "meta.yaml").exists()), train_config.parent)
+        if args.seed is not None:
+            torch.manual_seed(args.seed)
+        self.tts = Text2Speech(train_config=str(train_config), model_file=str(model_file), device=device)
+        self.sr = self.tts.fs
+        self.kwargs = self._speaker_kwargs(root, args.dialekt, args.sprecher_liste)
+        self.tokens = set(getattr(self.tts.train_args, "token_list", None) or [])
+        self._warned: set[str] = set()
+
+    @staticmethod
+    def _files_from_meta(root: Path) -> tuple[Path, Path]:
+        """Konfiguration und Gewichte über meta.yaml finden (wie espnet_model_zoo), sonst per Suche."""
+        meta = root / "meta.yaml"
+        if meta.exists():
+            import yaml
+            info = yaml.safe_load(meta.read_text())
+            config = (info.get("yaml_files") or {}).get("train_config")
+            model = (info.get("files") or {}).get("model_file")
+            if config and model:
+                return root / config, root / model
+        configs = sorted(root.glob("exp/**/config.yaml"))
+        models = sorted(root.glob("exp/**/*.pth"))
+        if not configs or not models:
+            sys.exit(f"Fehler: in {root} keine config.yaml/*.pth gefunden.")
+        return configs[0], models[0]
+
+    def _speaker_kwargs(self, root: Path, wanted: str | None, list_only: bool) -> dict:
+        import numpy as np
+        if self.tts.use_spembs:
+            arks = sorted(root.glob("**/spk_xvector.ark"), key=lambda p: ("train" not in str(p), str(p)))
+            if not arks:
+                sys.exit("Fehler: Modell braucht Sprecher-Vektoren, aber spk_xvector.ark fehlt im Modellordner.")
+            import kaldiio
+            speakers = {k: np.asarray(v, dtype=np.float32) for k, v in kaldiio.load_ark(str(arks[0]))}
+            kind = "spembs"
+        elif self.tts.use_sids:
+            files = sorted(root.glob("**/spk2sid"))
+            if not files:
+                sys.exit("Fehler: Modell braucht Sprecher-Nummern, aber spk2sid fehlt im Modellordner.")
+            speakers = {}
+            for line in files[0].read_text().splitlines():
+                parts = line.split()
+                if len(parts) == 2:
+                    speakers[parts[0]] = np.array([int(parts[1])], dtype=np.int64)
+            kind = "sids"
+        else:
+            if list_only:
+                log("Das Modell hat nur eine Stimme.")
+                sys.exit(0)
+            return {}
+        if list_only or not speakers:
+            log("Verfügbare Sprecher/Dialekte (--dialekt …):")
+            for key in sorted(speakers):
+                log(f"  {key}")
+            sys.exit(0)
+        key = self._pick_speaker(sorted(speakers), wanted)
+        log(f"Dialekt/Sprecher: {key}  (andere mit --sprecher-liste anzeigen)")
+        return {kind: speakers[key]}
+
+    def _pick_speaker(self, keys: list[str], wanted: str | None) -> str:
+        if not wanted:
+            return next((k for k in keys if "zh" in k.lower()), keys[0])
+        w = wanted.strip().lower()
+        codes = [w] + [code for code, names in self.DIALECTS.items() if w in names]
+        for code in codes:
+            for key in keys:
+                parts = re.split(r"[^a-z]+", key.lower())
+                if key.lower() == code or code in parts:
+                    return key
+        for key in keys:
+            if w in key.lower():
+                return key
+        sys.exit(f"Fehler: Dialekt «{wanted}» nicht gefunden. Verfügbar: {', '.join(keys)}")
+
+    def synth(self, text: str):
+        import torch
+        if self.tokens:
+            unknown = {c for c in text if c not in self.tokens and c.lower() not in self.tokens and not c.isspace()}
+            new = unknown - self._warned
+            if new:
+                self._warned |= new
+                log(f"  Hinweis: Zeichen, die das Modell nicht kennt (werden übersprungen): {' '.join(sorted(new))}")
+        with torch.no_grad():
+            out = self.tts(text, **self.kwargs)
+        return out["wav"].view(-1).cpu().numpy()
+
+
 class SayEngine:
     """macOS `say` – kein Klon, nur zum Testen der Pipeline."""
 
@@ -302,7 +459,8 @@ class DummyEngine:
         return (0.3 * np.sin(2 * np.pi * 440 * t)).astype(np.float32)
 
 
-ENGINES = {"chatterbox": ChatterboxEngine, "xtts": XTTSEngine, "say": SayEngine, "dummy": DummyEngine}
+ENGINES = {"chatterbox": ChatterboxEngine, "xtts": XTTSEngine, "swissdial": SwissDialEngine,
+           "say": SayEngine, "dummy": DummyEngine}
 
 
 # ---------------------------------------------------------------- Referenzen
@@ -398,12 +556,21 @@ def main() -> int:
     parser.add_argument("--cfg-weight", type=float, default=0.5, help="Chatterbox: Tempo/Treue (0.2–0.8)")
     parser.add_argument("--temperature", type=float, default=0.8, help="Chatterbox: Variation")
     parser.add_argument("--speed", type=float, default=1.0, help="XTTS: Sprechtempo (0.8–1.3)")
+    parser.add_argument("--zahlen-als-wort", action=argparse.BooleanOptionalAction, default=None,
+                        help="Ziffern als Mundart-Wörter sprechen (Standard: nur bei swissdial)")
+    parser.add_argument("--dialekt", help="SwissDial: Dialekt, z.B. zh, be, bs, lu, sg, gr, vs, ag (Standard: zh)")
+    parser.add_argument("--sprecher-liste", action="store_true", help="SwissDial: verfügbare Dialekte anzeigen")
+    parser.add_argument("--swissdial-dir", type=Path, help="SwissDial: Modell aus lokalem Ordner statt Download")
     parser.add_argument("--say-voice", default="Anna", help="Stimme für --engine say (leer = Systemstimme)")
     args = parser.parse_args()
 
     manifest = load_manifest(args.manifest)
     if args.export_texte:
         export_texts(manifest, args.export_texte)
+        return 0
+    if args.sprecher_liste:
+        ENGINES[args.engine]([], args)  # listet die Sprecher und beendet
+        log("Dieses Modell hat keine Sprecher-Auswahl.")
         return 0
 
     out_dir = args.ausgabe
@@ -446,8 +613,9 @@ def main() -> int:
     log(f"Erzeuge {len(todo)} Clip(s) → {out_dir}")
     started = time.time()
     failures = 0
+    words = args.zahlen_als_wort if args.zahlen_als_wort is not None else args.engine == "swissdial"
     for i, clip in enumerate(todo, 1):
-        text = prepare_text(clip["text"], lexicon)
+        text = prepare_text(spell_numbers(clip["text"]) if words else clip["text"], lexicon)
         t0 = time.time()
         try:
             audio = polish(engine.synth(text), engine.sr)

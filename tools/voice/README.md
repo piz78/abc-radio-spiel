@@ -111,9 +111,33 @@ Nützliche Optionen:
 --keys q-b-bern,letter-b --neu   # einzelne Clips neu erzeugen
 --limit 20             # höchstens 20 Clips
 --engine xtts          # anderes Modell (vorher: tools/voice/setup.sh xtts)
+--engine swissdial --dialekt be  # Mundart-Modell SwissDial (vorher: tools/voice/setup.sh swissdial)
 --engine say           # macOS-Systemstimme, nur um die Pipeline zu testen
 --export-texte texte.md          # alle Sprechtexte als Liste
 ```
+
+## Variante: echte Mundart-Stimme mit SwissDial (ohne Klon)
+
+[swordi/SwissDial-TTS](https://huggingface.co/swordi/SwissDial-TTS) ist ein ESPnet-Modell (VITS),
+trainiert auf dem [SwissDial-Korpus](https://arxiv.org/abs/2103.11401) der ETH Zürich: **8 Sprecher, je ein
+Dialekt** (Aargau, Bern, Basel, Graubünden, Luzern, St. Gallen, Wallis, Zürich). Es spricht unsere
+Mundart-Texte direkt in einem dieser Dialekte – **klont aber nicht deine Stimme** und braucht keine Referenzen.
+
+```bash
+tools/voice/setup.sh swissdial                       # eigene Umgebung (Python 3.12, ESPnet)
+tools/voice/.venv-swissdial/bin/python tools/voice/generate_clips.py --engine swissdial --sprecher-liste
+tools/voice/.venv-swissdial/bin/python tools/voice/generate_clips.py --engine swissdial --dialekt bärn --vorschau
+```
+
+- `--dialekt` nimmt das Kürzel (`zh`, `be`, `bs`, `lu`, `sg`, `gr`, `vs`, `ag`) oder den Namen (`bärn`,
+  `basel`, `wallis` …). Ohne Angabe: Zürich. `--sprecher-liste` zeigt, was das Modell wirklich anbietet.
+- **Zahlen werden automatisch als Mundart-Wörter gesprochen** («45» → «föifevierzg», «1476» →
+  «vierzähhundertsächsesibezg», «1. Auguscht» → «erschte Auguscht»), weil zeichenbasierte Modelle oft keine
+  Ziffern kennen. Abschalten mit `--no-zahlen-als-wort`, für andere Modelle einschalten mit `--zahlen-als-wort`.
+- Zeichen, die das Modell nicht kennt, meldet das Skript einmal als Hinweis.
+- Läuft auf der CPU; das Modell ist klein, kurze Sätze gehen schnell.
+- Lizenz: Bitte auf der Modellseite prüfen; der SwissDial-Korpus ist für die Forschung freigegeben –
+  für ein privates Spiel unproblematisch, für eine Veröffentlichung im App Store vorher klären.
 
 ## Feinschliff
 
@@ -136,6 +160,7 @@ Code-Muster) und listet bekannte Sicherheitslücken:
 ```bash
 tools/voice/.venv-chatterbox/bin/python -I tools/voice/audit_env.py chatterbox-tts soundfile numpy setuptools
 tools/voice/.venv-xtts/bin/python -I tools/voice/audit_env.py coqui-tts torch torchaudio six soundfile numpy
+tools/voice/.venv-swissdial/bin/python -I tools/voice/audit_env.py espnet espnet-model-zoo kaldiio soundfile numpy torch torchaudio
 ```
 
 Die Argumente sind die direkt installierten Pakete aus `setup.sh`. Am besten nach jeder (Neu-)Installation laufen lassen.
@@ -146,6 +171,7 @@ Die Argumente sind die direkt installierten Pakete aus `setup.sh`. Am besten nac
 |---|---|---|
 | [Chatterbox Multilingual](https://github.com/resemble-ai/chatterbox) (Resemble AI) | MIT | Standard, gute Qualität, Deutsch, läuft auf Apple Silicon (MPS) |
 | [XTTS-v2](https://huggingface.co/coqui/XTTS-v2) (Coqui) | Coqui Public Model License – **nur nicht-kommerziell** | nutzt mehrere Referenzen, läuft auf CPU (langsamer) |
+| [SwissDial-TTS](https://huggingface.co/swordi/SwissDial-TTS) (ESPnet/VITS) | siehe Modellseite; Daten: SwissDial (Forschung) | echte Mundart in 8 Dialekten, kein Klon, schnell |
 
 Chatterbox versieht erzeugte Audios mit einem unhörbaren Wasserzeichen (Perth), das sie als KI-generiert kennzeichnet.
 
