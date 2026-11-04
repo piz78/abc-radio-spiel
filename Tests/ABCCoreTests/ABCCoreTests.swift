@@ -39,6 +39,16 @@ final class QuestionBankTests: XCTestCase {
         }
         XCTAssertEqual(Set(bank.questions.map(\.id)).count, bank.questions.count, "IDs müssen eindeutig sein")
     }
+
+    /// «B wie …» soll keine Antwort verraten.
+    func testLetterExamplesAreNoAnswers() throws {
+        let bank = try Self.loadBank()
+        let answers = Set(bank.questions.flatMap(\.acceptedAnswers).map(AnswerMatcher.normalize))
+        for (letter, example) in ModeratorScript.letterExamples {
+            XCTAssertFalse(answers.contains(AnswerMatcher.normalize(example)),
+                           "«\(letter) wie \(example)» ist eine Antwort in fragen.txt")
+        }
+    }
 }
 
 final class CardGeneratorTests: XCTestCase {

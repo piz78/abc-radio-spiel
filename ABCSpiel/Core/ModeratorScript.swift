@@ -74,13 +74,12 @@ enum ModeratorScript {
         "V": "Fau", "W": "We", "X": "Ix", "Y": "Üpsilon", "Z": "Zett",
     ]
 
-    /// «B wie Bärn» – Schweizer Buchstabier-Beispiele.
+    /// «B wie Bümpliz» – Schweizer Buchstabier-Beispiele. Keines davon ist eine Antwort in fragen.txt.
     static let letterExamples: [String: String] = [
-        "A": "Aarau", "B": "Bärn", "C": "Chur", "D": "Davos", "E": "Emme", "F": "Fribourg",
-        "G": "Glarus", "H": "Herisau", "I": "Interlake", "J": "Jura", "K": "Kreuzlinge",
-        "L": "Luzärn", "M": "Murte", "N": "Nöieburg", "O": "Olte", "P": "Pilatus", "Q": "Quinte",
-        "R": "Rhy", "S": "Säntis", "T": "Thun", "U": "Uri", "V": "Vevey", "W": "Winterthur",
-        "X": "Xylophon", "Y": "Yverdon", "Z": "Zug",
+        "A": "Altdorf", "B": "Bümpliz", "C": "Celerina", "D": "Dübendorf", "E": "Emme", "F": "Flüele", "G": "Gossau",
+        "H": "Huttwil", "I": "Ittige", "J": "Jaunpass", "K": "Klosters", "L": "Langethal", "M": "Mendrisio", "N": "Nidau",
+        "O": "Oensinge", "P": "Prattele", "Q": "Quinte", "R": "Rorschach", "S": "Spiez", "T": "Thusis", "U": "Unterseen",
+        "V": "Vallorbe", "W": "Wädenswil", "X": "Xylophon", "Y": "Yverdon", "Z": "Zurzach",
     ]
 
     static func spokenLetter(_ letter: String) -> String {

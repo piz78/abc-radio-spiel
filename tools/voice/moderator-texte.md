@@ -53,30 +53,32 @@ Schlüssel: announce-1, announce-2, announce-3
 
 ## 4. Buechstabe (23)
 
+Die Beispielwörter kommen absichtlich in keiner Antwort vor.
+
 ```
-A. A wie Aarau!
-Be. Be wie Bärn!
-Ze. Ze wie Chur!
-De. De wie Davos!
+A. A wie Altdorf!
+Be. Be wie Bümpliz!
+Ze. Ze wie Celerina!
+De. De wie Dübendorf!
 E. E wie Emme!
-Eff. Eff wie Fribourg!
-Ge. Ge wie Glarus!
-Ha. Ha wie Herisau!
-I. I wie Interlake!
-Jott. Jott wie Jura!
-Ka. Ka wie Kreuzlinge!
-Ell. Ell wie Luzärn!
-Emm. Emm wie Murte!
-Enn. Enn wie Nöieburg!
-O. O wie Olte!
-Pe. Pe wie Pilatus!
-Err. Err wie Rhy!
-Ess. Ess wie Säntis!
-Te. Te wie Thun!
-U. U wie Uri!
-Fau. Fau wie Vevey!
-We. We wie Winterthur!
-Zett. Zett wie Zug!
+Eff. Eff wie Flüele!
+Ge. Ge wie Gossau!
+Ha. Ha wie Huttwil!
+I. I wie Ittige!
+Jott. Jott wie Jaunpass!
+Ka. Ka wie Klosters!
+Ell. Ell wie Langethal!
+Emm. Emm wie Mendrisio!
+Enn. Enn wie Nidau!
+O. O wie Oensinge!
+Pe. Pe wie Prattele!
+Err. Err wie Rorschach!
+Ess. Ess wie Spiez!
+Te. Te wie Thusis!
+U. U wie Unterseen!
+Fau. Fau wie Vallorbe!
+We. We wie Wädenswil!
+Zett. Zett wie Zurzach!
 ```
 
 Schlüssel: letter-a, letter-b, letter-c, letter-d, letter-e, letter-f, letter-g, letter-h, letter-i, letter-j,
