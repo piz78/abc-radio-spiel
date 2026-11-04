@@ -54,7 +54,7 @@ python3 tools/voice/split_fragen.py 4 aufnahme-buchstabe.mp3
 ```
 
 Benötigt `numpy` und `ffmpeg`. Ein ⚠️ in der Liste markiert Stücke, deren Länge stark von der
-Erwartung abweicht – dort kurz reinhören. Die Fragen für A, B und C und die Moderator-Blöcke 1–5
+Erwartung abweicht – dort kurz reinhören. Die Fragen für A, B und C und die Moderator-Blöcke 1–6
 sind so entstanden.
 
 ## 1. In der App aufnehmen
