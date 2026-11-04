@@ -73,6 +73,7 @@ Nützliche Optionen:
   Chatterbox nutzt die ersten ~10 s (die `ref-…`-Aufnahmen zuerst).
 - **Aussprache:** Die Modelle haben vor allem Hochdeutsch gelernt. In `aussprache.txt` kannst du Wörter
   umschreiben (`Chäs = Chääs`). Danach betroffene Clips mit `--keys … --neu` neu erzeugen.
+- **Tempo (XTTS):** `--speed 1.15` etwas schneller, wie im Radio.
 - **Ausdruck/Tempo (Chatterbox):** `--exaggeration 0.7` lebhafter (Radio-Stil), `--cfg-weight 0.3` ruhiger/langsamer.
   Andere Variante eines Clips: `--seed 3 --keys … --neu`.
 - **Einzelne schlechte Clips** einfach in der App selber einsprechen – eigene Aufnahmen haben Vorrang.

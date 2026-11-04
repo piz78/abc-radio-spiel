@@ -239,13 +239,36 @@ class XTTSEngine:
         log(f"Lade XTTS-v2 auf «{device}» (beim ersten Mal ca. 2 GB Download, Lizenz bestätigen) …")
         if args.seed is not None:
             torch.manual_seed(args.seed)
+        import warnings
         self.tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
         self.sr = self.tts.synthesizer.output_sample_rate
-        self.references = [str(p) for p in convert_references(references)[:10]]
+        self.model = self.tts.synthesizer.tts_model
+        cfg = self.model.config
+        refs = [str(p) for p in convert_references(references)[:10]]
+        # Stimme nur EINMAL auswerten (statt bei jedem Clip die Referenzen neu zu laden).
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=UserWarning, module="torchaudio")
+            self.gpt_cond_latent, self.speaker_embedding = self.model.get_conditioning_latents(
+                audio_path=refs,
+                gpt_cond_len=cfg.gpt_cond_len,
+                gpt_cond_chunk_len=cfg.gpt_cond_chunk_len,
+                max_ref_length=cfg.max_ref_len,
+                sound_norm_refs=cfg.sound_norm_refs,
+            )
+        self.settings = {
+            "temperature": cfg.temperature,
+            "length_penalty": cfg.length_penalty,
+            "repetition_penalty": cfg.repetition_penalty,
+            "top_k": cfg.top_k,
+            "top_p": cfg.top_p,
+            "speed": args.speed,
+        }
+        log(f"Stimme aus {len(refs)} Referenz-Aufnahme(n) ausgewertet.")
 
     def synth(self, text: str):
         import numpy as np
-        return np.asarray(self.tts.tts(text=text, speaker_wav=self.references, language="de"), dtype=np.float32)
+        out = self.model.inference(text, "de", self.gpt_cond_latent, self.speaker_embedding, **self.settings)
+        return np.asarray(out["wav"], dtype=np.float32)
 
 
 class SayEngine:
@@ -374,6 +397,7 @@ def main() -> int:
     parser.add_argument("--exaggeration", type=float, default=0.5, help="Chatterbox: Ausdruck (0.25–1.0)")
     parser.add_argument("--cfg-weight", type=float, default=0.5, help="Chatterbox: Tempo/Treue (0.2–0.8)")
     parser.add_argument("--temperature", type=float, default=0.8, help="Chatterbox: Variation")
+    parser.add_argument("--speed", type=float, default=1.0, help="XTTS: Sprechtempo (0.8–1.3)")
     parser.add_argument("--say-voice", default="Anna", help="Stimme für --engine say (leer = Systemstimme)")
     args = parser.parse_args()
 
