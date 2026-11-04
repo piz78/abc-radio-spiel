@@ -35,6 +35,20 @@ Satz von der iOS-Stimme gelesen.
 Frage ohne Aufnahme. Rund 580 Sätze sind etwa 30–45 Minuten reine Sprechzeit; Fragen ohne Aufnahme
 liest bis dahin die iOS-Stimme (oder ein generierter Clip). Der Stimm-Klon unten ist damit optional.
 
+### Fragen aus einer langen Aufnahme zerlegen (z.B. ElevenLabs)
+
+Wenn alle Fragen eines Buchstabens in einer Datei stecken (Reihenfolge wie in `fragen.txt`),
+schneidet `split_fragen.py` sie in einzelne Clips – ganz ohne Spracherkennung: Es sucht die Pausen
+und wählt die Schnitte so, dass jedes Stück zur Textlänge seiner Frage passt.
+
+```bash
+python3 tools/voice/split_fragen.py D aufnahme-d.mp3 --pruefen   # nur Zuordnung anzeigen
+python3 tools/voice/split_fragen.py D aufnahme-d.mp3             # Clips schreiben
+```
+
+Benötigt `numpy` und `ffmpeg`. Ein ⚠️ in der Liste markiert Stücke, deren Länge stark von der
+Erwartung abweicht – dort kurz reinhören. Die Fragen für A, B und C sind so entstanden.
+
 ## 1. In der App aufnehmen
 
 1. *Iistellige › Moderator › Eigeni Stimm* öffnen.
