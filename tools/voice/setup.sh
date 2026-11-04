@@ -20,7 +20,8 @@ case "$ENGINE" in
     ;;
   xtts)
     # PyTorch < 2.9: ab 2.9 verlangt coqui-tts zusätzlich torchcodec + FFmpeg-Bibliotheken.
-    uv pip install --python "$VENV/bin/python" coqui-tts "torch<2.9" "torchaudio<2.9" soundfile numpy
+    # six: wird von coqui-tts importiert, aber nicht als Abhängigkeit mitinstalliert.
+    uv pip install --python "$VENV/bin/python" coqui-tts "torch<2.9" "torchaudio<2.9" six soundfile numpy
     ;;
   *)
     echo "Unbekanntes Modell: $ENGINE (chatterbox oder xtts)"
