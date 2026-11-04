@@ -18,8 +18,11 @@ Fan-Projekt, nicht offiziell.
   Rekord, Siege, Durchschnitt.
 - 👥 **Mit Fründe spiele** – du moderierst, die Lösungen werden dir angezeigt.
 - 🗂️ **Chartestapel** – Karten für jeden Buchstaben generieren, anschauen und teilen.
-- 🗣️ **Eigene Stimme** – Moderator-Sätze in der App selber einsprechen, und mit einem lokalen
-  KI-Modell auf dem Mac alle Fragen in deiner Stimme erzeugen → [tools/voice/README.md](tools/voice/README.md).
+- 🗣️ **Eigene Stimme** – Moderator-Sätze und Fragen in der App selber einsprechen, ganz ohne KI:
+  Sätze mit Zahlen («Du hesch 45 Sekunde», «12 Pünkt») werden wie die SBB-Ansagen aus Bausteinen
+  zusammengesetzt, die Fragen nimmst du am Stück auf (Teleprompter, springt automatisch weiter).
+  Was fehlt, liest die iOS-Stimme. Optional erzeugt ein lokales KI-Modell auf dem Mac die
+  restlichen Fragen in deiner Stimme → [tools/voice/README.md](tools/voice/README.md).
 
 ## Starten
 

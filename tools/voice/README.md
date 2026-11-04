@@ -4,10 +4,36 @@ Der Moderator kann mit **deiner Stimme** sprechen. Dafür gibt es zwei Wege, die
 
 | | Was | Wo |
 |---|---|---|
-| **Selber einsprechen** | Begrüssung, Buchstaben, Countdown, Urteile … in echter Mundart | App › Iistellige › Eigeni Stimm |
+| **Selber einsprechen** | Begrüssung, Buchstaben, Countdown, Urteile, Zahlen – und auf Wunsch alle Fragen, in echter Mundart | App › Iistellige › Eigeni Stimm |
 | **Stimm-Klon** | Alle ~580 Fragen werden aus ein paar Aufnahmen in deiner Stimme erzeugt | Mac, dieses Tool, lokales Modell |
 
 Im Spiel gilt: **eigene Aufnahme → generierter Clip → iOS-Stimme** (was zuerst vorhanden ist).
+
+### Bausteine statt ganzer Sätze (SBB-Prinzip)
+
+Sätze mit Zahlen werden nicht mehr als ganze Sätze aufgenommen, sondern aus Bausteinen
+zusammengesetzt – so wie die Durchsagen an Schweizer Bahnhöfen:
+
+| Satz | Bausteine |
+|---|---|
+| «Du hesch 45 Sekunde.» | `rules-seconds-pre` «Du hesch …» + `zahl-45` «föifevierzg» + `rules-seconds-post` «… Sekunde.» |
+| «Mit 12 richtige Antworte hesch gwunne.» | `rules-target-pre` + `zahl-12` + `rules-target-post` |
+| «12 Pünkt.» | `zahl-12` + `score-points` «… Pünkt.» (bei 1: `score-one` «Ein Punkt.») |
+
+Die Zahlen 0–30, 45, 60 und 90 gibt es je einmal, gesprochen **wie mitten im Satz** (Stimme oben
+lassen). Statt 56 ganzen Sätzen sind es so 40 kurze Aufnahmen, und jede Kombination klingt gleich.
+Die App schneidet beim Speichern Stille am Anfang und Ende weg, damit die Teile lückenlos aneinanderpassen.
+
+Reihenfolge beim Abspielen: eigene Aufnahme des ganzen Satzes → **alle** Bausteine vorhanden →
+generierter ganzer Satz → iOS-Stimme. Fehlt ein Baustein, wird nicht gemischt, sondern der ganze
+Satz von der iOS-Stimme gelesen.
+
+### Fragen ohne KI einsprechen
+
+*Eigeni Stimm › Frage › Alli Frage am Stück*: Die App zeigt eine Frage nach der anderen gross an.
+🎙️ antippen, Frage vorlesen, nochmals antippen – gespeichert, und es geht automatisch zur nächsten
+Frage ohne Aufnahme. Rund 580 Sätze sind etwa 30–45 Minuten reine Sprechzeit; Fragen ohne Aufnahme
+liest bis dahin die iOS-Stimme (oder ein generierter Clip). Der Stimm-Klon unten ist damit optional.
 
 ## 1. In der App aufnehmen
 
