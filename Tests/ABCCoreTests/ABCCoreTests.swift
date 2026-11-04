@@ -189,7 +189,7 @@ final class ModeratorAndStatsTests: XCTestCase {
         let line = ModeratorScript.letterAnnouncement("W", using: &rng)
         XCTAssertTrue(line.display.contains("W"))
         XCTAssertTrue(line.spoken.contains("We"))
-        XCTAssertTrue(line.spoken.contains("Winterthur"))
+        XCTAssertTrue(line.spoken.contains(ModeratorScript.letterExamples["W"]!))
     }
 
     func testStats() {
