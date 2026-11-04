@@ -5,10 +5,12 @@ Gedacht für Fragen, die am Stück eingesprochen oder extern erzeugt wurden (z.B
 eine Audiodatei pro Buchstabe, die Fragen in derselben Reihenfolge wie in fragen.txt.
 
     python3 tools/voice/split_fragen.py A aufnahme-a.mp3 [--pruefen]
+    python3 tools/voice/split_fragen.py 4 aufnahme-block-4.mp3     # Block 4 aus moderator-texte.md
 
 Ohne Spracherkennung: Das Skript sucht die Pausen und wählt per dynamischer Programmierung
 genau so viele Schnitte, dass die Länge jedes Stücks am besten zur Textlänge der Frage passt
-und die Pausen möglichst lang sind. `--pruefen` zeigt nur die Zuordnung (Dauer vs. erwartet),
+und die Pausen möglichst lang sind. Statt eines Buchstabens geht auch die Nummer eines Blocks
+aus tools/voice/moderator-texte.md (Moderator-Sätze, Schlüssel aus der Zeile «Schlüssel:»). `--pruefen` zeigt nur die Zuordnung (Dauer vs. erwartet),
 ohne Dateien zu schreiben. Ergebnis: ABCSpiel/Resources/Clips/q-<buchstabe>-<antwort>.m4a.
 
 Benötigt: numpy, ffmpeg.
@@ -27,10 +29,12 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 FRAGEN = ROOT / "ABCSpiel/Resources/fragen.txt"
+MODERATOR = ROOT / "tools/voice/moderator-texte.md"
 CLIPS = ROOT / "ABCSpiel/Resources/Clips"
 SR = 16000
 HOP = 160  # 10 ms
-THRESHOLD_DB = -40
+THRESHOLD_DB = -40  # darunter zählt es als Pause
+SILENCE_DB = -55  # darunter ist es wirklich still (für die Clip-Ränder)
 
 
 def slug(text: str) -> str:
@@ -41,12 +45,27 @@ def slug(text: str) -> str:
 
 
 def questions(letter: str) -> list[tuple[str, str]]:
+    """(Text, Clip-Schlüssel) der Fragen eines Buchstabens."""
     result = []
     for line in FRAGEN.read_text(encoding="utf-8").splitlines():
         parts = [p.strip() for p in line.split("|")]
         if len(parts) >= 3 and parts[0] == letter:
-            result.append((parts[1], parts[2]))
+            result.append((parts[1], f"q-{letter.lower()}-{slug(parts[2])}"))
     return result
+
+
+def moderator_block(number: int) -> list[tuple[str, str]]:
+    """(Text, Clip-Schlüssel) eines Blocks aus moderator-texte.md."""
+    text = MODERATOR.read_text(encoding="utf-8")
+    match = re.search(rf"^## {number}\. .*?^```\n(.*?)^```\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+    if not match:
+        sys.exit(f"Fehler: Block {number} nicht in {MODERATOR}.")
+    lines = [line.strip() for line in match.group(1).splitlines() if line.strip()]
+    keys_text = match.group(2).split("Schlüssel:", 1)[-1].split("\n\n")[0]
+    keys = re.findall(r"[a-z]+(?:-[a-z0-9]+)*", keys_text)
+    if len(keys) != len(lines):
+        sys.exit(f"Fehler: Block {number} hat {len(lines)} Zeilen, aber {len(keys)} Schlüssel.")
+    return list(zip(lines, keys))
 
 
 def loudness(path: Path) -> np.ndarray:
@@ -112,33 +131,42 @@ def align(db: np.ndarray, texts: list[str]) -> list[tuple[float, float]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("buchstabe")
+    parser.add_argument("buchstabe", help="Buchstabe (Fragen) oder Nummer eines Blocks in moderator-texte.md")
     parser.add_argument("audio", type=Path)
     parser.add_argument("--pruefen", action="store_true", help="nur Zuordnung anzeigen, nichts schreiben")
     parser.add_argument("--ziel", type=Path, default=CLIPS)
     args = parser.parse_args()
 
-    letter = args.buchstabe.upper()
-    qs = questions(letter)
+    if args.buchstabe.isdigit():
+        qs = moderator_block(int(args.buchstabe))
+    else:
+        qs = questions(args.buchstabe.upper())
     if not qs:
-        sys.exit(f"Fehler: keine Fragen für {letter} in {FRAGEN}.")
-    segments = align(loudness(args.audio), [q for q, _ in qs])
+        sys.exit(f"Fehler: keine Fragen für {args.buchstabe} in {FRAGEN}.")
+    db = loudness(args.audio)
+    segments = align(db, [q for q, _ in qs])
     rate = sum(e - s for s, e in segments) / sum(sum(c.isalnum() for c in q) for q, _ in qs)
 
     if not args.pruefen:
         args.ziel.mkdir(parents=True, exist_ok=True)
-    for k, ((start, end), (prompt, answer)) in enumerate(zip(segments, qs)):
+    for k, ((start, end), (prompt, key)) in enumerate(zip(segments, qs)):
         expected = sum(c.isalnum() for c in prompt) * rate
         flag = "  ⚠️" if abs((end - start) - expected) > 0.35 * expected + 0.3 else ""
-        key = f"q-{letter.lower()}-{slug(answer)}"
         print(f"{k + 1:3d} {start:7.2f}–{end:7.2f}  {end - start:4.2f}s (erw. {expected:4.2f}){flag}  {key}  {prompt}")
         if args.pruefen:
             continue
-        # Etwas Luft lassen, aber nie bis in die Nachbarfrage.
-        prev_end = segments[k - 1][1] if k else 0.0
-        next_start = segments[k + 1][0] if k + 1 < len(segments) else end + 0.3
-        a = max((prev_end + start) / 2 if k else 0.0, start - 0.08)
-        b = min((end + next_start) / 2, end + 0.15)
+        # Bis zur echten Stille ausdehnen (leise Endsilben!) plus etwas Luft,
+        # aber nie über die Mitte der Pause zur Nachbarfrage hinaus.
+        lo = (segments[k - 1][1] + start) / 2 if k else 0.0
+        hi = (end + segments[k + 1][0]) / 2 if k + 1 < len(segments) else len(db) * 0.01
+        f = int(round(start * 100))
+        while f > lo * 100 and db[f - 1] > SILENCE_DB:
+            f -= 1
+        a = max(lo, f * 0.01 - 0.05)
+        f = int(round(end * 100))
+        while f < hi * 100 - 1 and db[f] > SILENCE_DB:
+            f += 1
+        b = min(hi, f * 0.01 + 0.08)
         d = b - a
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", str(args.audio),
                         "-af", f"afade=t=in:d=0.01,afade=t=out:st={d - 0.03:.3f}:d=0.03",

@@ -46,8 +46,16 @@ python3 tools/voice/split_fragen.py D aufnahme-d.mp3 --pruefen   # nur Zuordnung
 python3 tools/voice/split_fragen.py D aufnahme-d.mp3             # Clips schreiben
 ```
 
+Für die Moderator-Sätze statt des Buchstabens die Nummer des Blocks aus
+[`moderator-texte.md`](moderator-texte.md) angeben:
+
+```bash
+python3 tools/voice/split_fragen.py 4 aufnahme-buchstabe.mp3
+```
+
 Benötigt `numpy` und `ffmpeg`. Ein ⚠️ in der Liste markiert Stücke, deren Länge stark von der
-Erwartung abweicht – dort kurz reinhören. Die Fragen für A, B und C sind so entstanden.
+Erwartung abweicht – dort kurz reinhören. Die Fragen für A, B und C und die Moderator-Blöcke 1–5
+sind so entstanden.
 
 ## 1. In der App aufnehmen
 

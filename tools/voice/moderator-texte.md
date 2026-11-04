@@ -174,4 +174,4 @@ sächzg
 nünzg
 ```
 
-Schlüssel: zahl-0 … zahl-30, zahl-45, zahl-60, zahl-90
+Schlüssel: zahl-0, zahl-1, zahl-2, zahl-3, zahl-4, zahl-5, zahl-6, zahl-7, zahl-8, zahl-9, zahl-10, zahl-11, zahl-12, zahl-13, zahl-14, zahl-15, zahl-16, zahl-17, zahl-18, zahl-19, zahl-20, zahl-21, zahl-22, zahl-23, zahl-24, zahl-25, zahl-26, zahl-27, zahl-28, zahl-29, zahl-30, zahl-45, zahl-60, zahl-90
