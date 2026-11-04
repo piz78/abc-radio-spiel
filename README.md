@@ -6,7 +6,7 @@ Fan-Projekt, nicht offiziell.
 
 ## Features
 
-- 🃏 **Generierte Karten** – 581 Fragen in Mundart für 23 Buchstaben; jede Runde zieht eine
+- 🃏 **Generierte Karten** – 1161 Fragen in Mundart für 23 Buchstaben; jede Runde zieht eine
   neue Karte (zuletzt gespielte Buchstaben werden vermieden, Fragen werden gemischt).
 - ⏱️ **Timer** – 45 s (einstellbar), Ring-Anzeige, Ticken in den letzten 5 Sekunden, Buzzer.
 - 🎙️ **Moderator «Ruedi»** – begrüsst, zieht den Buchstaben («B wie Bärn!»), zählt
