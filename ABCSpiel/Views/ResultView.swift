@@ -5,6 +5,12 @@ struct ResultView: View {
     let onPlayAgain: () -> Void
     let onClose: () -> Void
 
+    /// So lange sind die Knöpfe nach dem Erscheinen gesperrt – wer beim Zeitablauf noch auf
+    /// «Richtig»/«Wiiter» tippt, soll nicht aus Versehen «Nomal»/«Fertig» treffen.
+    static let inputDelay: Duration = .seconds(2.5)
+
+    @State private var inputEnabled = false
+
     private var won: Bool { controller.round.score >= controller.target }
 
     var body: some View {
@@ -25,6 +31,7 @@ struct ResultView: View {
                             row(entry)
                         }
                         .buttonStyle(.plain)
+                        .disabled(!inputEnabled)
                     }
                 }
             }
@@ -39,6 +46,13 @@ struct ResultView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
+            .disabled(!inputEnabled)
+            .opacity(inputEnabled ? 1 : 0.35)
+            .animation(.easeIn(duration: 0.3), value: inputEnabled)
+        }
+        .task {
+            try? await Task.sleep(for: Self.inputDelay)
+            inputEnabled = true
         }
     }
 
