@@ -77,6 +77,20 @@ Nützliche Optionen:
   Andere Variante eines Clips: `--seed 3 --keys … --neu`.
 - **Einzelne schlechte Clips** einfach in der App selber einsprechen – eigene Aufnahmen haben Vorrang.
 
+## Sicherheit der Python-Umgebungen prüfen
+
+Die Modelle ziehen über 100 Python-Pakete nach. `audit_env.py` prüft eine Umgebung auf Hinweise für
+Supply-Chain-Angriffe (Herkunft, entfernte/zurückgezogene Pakete, Malware-Meldungen, sehr frische Releases
+mit/ohne PyPI-Herkunftsnachweis, unerklärte Pakete, Autostart-Dateien, veränderte Dateien, verdächtige
+Code-Muster) und listet bekannte Sicherheitslücken:
+
+```bash
+tools/voice/.venv-chatterbox/bin/python -I tools/voice/audit_env.py chatterbox-tts soundfile numpy setuptools
+tools/voice/.venv-xtts/bin/python -I tools/voice/audit_env.py coqui-tts torch torchaudio six soundfile numpy
+```
+
+Die Argumente sind die direkt installierten Pakete aus `setup.sh`. Am besten nach jeder (Neu-)Installation laufen lassen.
+
 ## Modelle
 
 | Modell | Lizenz | Stärken |
