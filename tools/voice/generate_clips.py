@@ -198,6 +198,13 @@ class ChatterboxEngine:
 
     def __init__(self, references: list[Path], args):
         import torch
+        import perth
+        if perth.PerthImplicitWatermarker is None:
+            sys.exit(
+                "Fehler: Das Wasserzeichen-Paket von Chatterbox (resemble-perth) lässt sich nicht laden – meist fehlt\n"
+                "«pkg_resources». Beheben mit:\n"
+                f'  uv pip install --python "{sys.executable}" "setuptools<81"'
+            )
         from chatterbox.mtl_tts import ChatterboxMultilingualTTS
         device = pick_device(args.device)
         log(f"Lade Chatterbox Multilingual auf «{device}» (beim ersten Mal ca. 3 GB Download) …")

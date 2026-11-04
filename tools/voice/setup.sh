@@ -15,7 +15,8 @@ VENV=".venv-$ENGINE"
 uv venv --python 3.11 "$VENV"
 case "$ENGINE" in
   chatterbox)
-    uv pip install --python "$VENV/bin/python" chatterbox-tts soundfile numpy
+    # setuptools<81 liefert pkg_resources, das das Wasserzeichen-Paket (resemble-perth) braucht.
+    uv pip install --python "$VENV/bin/python" chatterbox-tts soundfile numpy "setuptools<81"
     ;;
   xtts)
     uv pip install --python "$VENV/bin/python" coqui-tts torch torchaudio soundfile numpy
