@@ -101,17 +101,18 @@ struct GameView: View {
     private func countdownView(_ number: Int) -> some View {
         VStack(spacing: 28) {
             ModeratorBubble(text: controller.bubble)
-            Spacer()
+            Spacer(minLength: 0)
+            // Gleiche Karte wie im Intro – der Buchstabe bleibt bis zum Start gross sichtbar.
+            LetterCardView(letter: controller.card.letter, revealed: true, size: 230)
+                .accessibilityLabel("Buechstabe \(controller.card.letter)")
             Text("\(number)")
-                .font(.system(size: 160, weight: .black, design: .rounded))
+                .font(.system(size: 110, weight: .black, design: .rounded))
                 .foregroundStyle(Theme.accent)
                 .id(number)
                 .transition(.scale(scale: 1.8).combined(with: .opacity))
                 .animation(.spring(duration: 0.4), value: number)
-            Text("Buechstabe \(controller.card.letter)")
-                .font(.title2.weight(.bold))
-                .foregroundStyle(.white)
-            Spacer()
+                .accessibilityLabel("Countdown \(number)")
+            Spacer(minLength: 0)
         }
     }
 
